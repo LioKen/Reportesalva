@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Solicitudes</title>
+
+  <!-- Preload y enlaces a hojas de estilo externas -->
+  <link rel="preload" href="normalize.css" as="style">
+  <link rel="stylesheet" href="normalize.css">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap" rel="stylesheet">
+  
+  <link rel="preload" href="style1.css" as="style">
+  <link rel="stylesheet" href="style1.css">
+
+  <!-- Estilos adicionales para autocompletado y header -->
+</head>
+<body>
+  <header class="header">
+    <div class="header__logo">
+      <a href="index.html">
+        <!-- Logo SVG -->
+        <svg width="131" height="44" viewBox="0 0 131 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Aquí van los paths de tu logo -->
+        </svg>
+      </a>
+    </div>
+    <div class="header__icono">
+      <a href="index.html">
+        <!-- Home icon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="#005286" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
+          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+          <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <form id="miFormulario" class="formulario">
+        <!-- Encabezado -->
+        <div class="form-header">
+          <span class="header-icon">📝</span>
+          <h2>Formulario de Solicitudes</h2>
+        </div>
+        <!-- Mensaje de error -->
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+        
+        <div class="contenedor-campos">
+          <!-- CAMPO: DESCRIPCION, CANTIDAD y UNIDAD DE MEDIDA -->
+          <div class="campo">
+            <label>DESCRIPCION</label>
+            <div id="descripcion-container">
+              <div class="descripcion-item">
+                <!-- Contenedor exclusivo para el input autocompletable -->
+                <div class="autocomplete-container">
+                  <input type="text" name="descripcion[]" class="input-text descripcion-input" placeholder="Descripción" autocomplete="off" required>
+                  <ul class="suggestions-list"></ul>
+                </div>
+                <!-- Campo de cantidad -->
+                <input type="number" name="cantidad[]" class="input-text cantidad-input" placeholder="Cantidad" min="0" required>
+                <!-- Campo select para unidad -->
+                <select name="und_de_medida[]" class="input-text" required>
+                  <option value="">Selecciona la unidad</option>
+                </select>
+              </div>
+            </div>
+            <button type="button" id="addDescripcion" class="add-btn">+ Agregar</button>
+          </div>
+
+          <!-- TIPO DE PEDIDO -->
+          <div class="campo">
+            <label>TIPO DE PEDIDO</label>
+            <select id="tipo_de_pedidoSelect" name="tipo_de_pedido" class="input-text" required>
+              <option value="">Selecciona el tipo de pedido</option>
+            </select>
+          </div>
+
+          <!-- OT -->
+          <div class="campo">
+            <label>OT</label>
+            <input name="ot" class="input-text" type="text" placeholder="Ingresa la OT" required>
+          </div>
+
+          <!-- DETALLE UBICACION EN MAQUINA -->
+          <div class="campo">
+            <label>DETALLE UBICACION EN MAQUINA</label>
+            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
+          </div>
+
+          <!-- MAQUINA -->
+          <div class="campo">
+            <label>MAQUINA</label>
+            <div class="autocomplete-container">
+              <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
+              <ul id="maquinaSuggestions" class="suggestions-list"></ul>
+            </div>
+          </div>
+
+          <!-- SOLICITANTE -->
+          <div class="campo">
+            <label>SOLICITANTE</label>
+            <div class="autocomplete-container">
+              <input type="text" id="solicitanteInput" name="solicitante" class="input-text" placeholder="Selecciona o escribe el solicitante" autocomplete="off" required>
+              <ul id="solicitanteSuggestions" class="suggestions-list"></ul>
+            </div>
+          </div>
+
+          <!-- JEFE RESPONSABLE -->
+          <div class="campo">
+            <label>JEFE RESPONSABLE</label>
+            <select name="jefe_responsable" class="input-text" required>
+              <option value="">Selecciona el jefe</option>
+              <option value="ANTONY CARRANZA">ANTONY CARRANZA</option>
+              <option value="PEDRO MATOS">PEDRO MATOS</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="alinear-derecha flex">
+          <input class="boton wm-sm-100" type="submit" value="Enviar">
+        </div>
+
+        <!-- Spinner y mensaje de confirmación -->
+        <div id="spinner" style="display: none; text-align: center; margin-top: 10px;">
+          <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+          </svg>
+        </div>
+        <div id="confirmationMessage" style="display: none;"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    Por favor, si tiene inconvenientes, comuníquese con ********
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    /* --- Función debounce para optimizar el input de autocompletado --- */
+    function debounce(func, delay) {
+      let timeout;
+      return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), delay);
+      };
+    }
+
+    // Variables para almacenar datos (se cargarán desde opciones.json)
+    let datosDescripcion = [];
+    let datosUndDeMedida = [];
+    let datosTipoDePedido = [];
+    let datosMaquina = [];
+    let datosSolicitante = [];
+
+    // Cargar datos desde opciones.json (se carga una sola vez)
+    fetch('opciones.json')
+      .then(response => response.json())
+      .then(data => {
+        // Usamos el array "items" (en minúsculas) para autocompletar la descripción
+        datosDescripcion = data.items || [];
+        datosUndDeMedida = data.und_de_medida || [];
+        datosTipoDePedido = data.tipo_de_pedido || [];
+        datosMaquina = data.maquina || [];
+        datosSolicitante = data.solicitante || [];
+
+        // Poblar el select de "TIPO DE PEDIDO"
+        populateSelect('tipo_de_pedidoSelect', datosTipoDePedido);
+
+        // Poblar el select de unidad de medida del primer input de descripción
+        const firstUmSelect = document.querySelector('#descripcion-container select[name="und_de_medida[]"]');
+        if (firstUmSelect) {
+          populateUnidadSelect(firstUmSelect, datosUndDeMedida);
+        }
+      })
+      .catch(error => console.error('Error al cargar el archivo JSON:', error));
+
+    // Función para poblar un select dado su id
+    function populateSelect(selectId, optionsArray) {
+      const selectElement = document.getElementById(selectId);
+      optionsArray.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
+      });
+    }
+
+    // Función para poblar un select de unidad
+    function populateUnidadSelect(selectElement, optionsArray) {
+      selectElement.innerHTML = '<option value="">Selecciona la unidad</option>';
+      optionsArray.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
+      });
+    }
+
+    // Función para mostrar sugerencias en el input
+    function mostrarSugerencias(inputElement, suggestionsElement, datos) {
+      const query = inputElement.value.toLowerCase();
+      suggestionsElement.innerHTML = '';
+      let filtrados = [];
+      if (datos.length > 0 && typeof datos[0] === 'object') {
+        filtrados = datos.filter(item => item.descripcion.toLowerCase().includes(query));
+      } else {
+        filtrados = datos.filter(item => item.toLowerCase().includes(query));
+      }
+      // Usar DocumentFragment para minimizar reflows
+      const fragment = document.createDocumentFragment();
+      filtrados.forEach(item => {
+        const li = document.createElement('li');
+        if (typeof item === 'object') {
+          li.textContent = item.descripcion;
+          li.setAttribute('data-codigo', item.codigo);
+        } else {
+          li.textContent = item;
+        }
+        li.addEventListener('click', () => {
+          inputElement.value = typeof item === 'object' ? item.descripcion : item;
+          suggestionsElement.innerHTML = '';
+          const container = inputElement.closest('.autocomplete-container');
+          if (container) {
+            let hiddenCodigoInput = container.querySelector('input.codigo-maquina-hidden');
+            if (!hiddenCodigoInput) {
+              hiddenCodigoInput = document.createElement('input');
+              hiddenCodigoInput.type = 'hidden';
+              hiddenCodigoInput.name = 'codigo_maquina[]';
+              hiddenCodigoInput.className = 'codigo-maquina-hidden';
+              container.appendChild(hiddenCodigoInput);
+            }
+            hiddenCodigoInput.value = li.getAttribute('data-codigo') || '';
+          }
+        });
+        fragment.appendChild(li);
+      });
+      suggestionsElement.appendChild(fragment);
+    }
+
+    // Configurar autocompletado con debounce
+    function setupAutocompleteForDescripcion(input) {
+      const container = input.closest('.autocomplete-container');
+      const suggestionsList = container.querySelector('.suggestions-list');
+      input.addEventListener('input', debounce(function() {
+        mostrarSugerencias(input, suggestionsList, datosDescripcion);
+      }, 300));
+    }
+
+    // Inicializar autocompletado para todos los inputs de descripción
+    document.querySelectorAll('.descripcion-input').forEach(input => {
+      setupAutocompleteForDescripcion(input);
+    });
+
+    // Agregar nuevas filas con DocumentFragment para mejorar el rendimiento
+    document.getElementById('addDescripcion').addEventListener('click', function() {
+      const container = document.getElementById('descripcion-container');
+      const fragment = document.createDocumentFragment();
+      const newDiv = document.createElement('div');
+      newDiv.className = 'descripcion-item';
+
+      // Crear contenedor exclusivo para el input autocompletable
+      const autocompleteDiv = document.createElement('div');
+      autocompleteDiv.className = 'autocomplete-container';
+      const newDescInput = document.createElement('input');
+      newDescInput.type = 'text';
+      newDescInput.name = 'descripcion[]';
+      newDescInput.className = 'input-text descripcion-input';
+      newDescInput.placeholder = 'Descripción';
+      newDescInput.setAttribute('autocomplete', 'off');
+      newDescInput.required = true;
+      autocompleteDiv.appendChild(newDescInput);
+      const newUl = document.createElement('ul');
+      newUl.className = 'suggestions-list';
+      autocompleteDiv.appendChild(newUl);
+
+      // Nuevo input para cantidad
+      const newQtyInput = document.createElement('input');
+      newQtyInput.type = 'number';
+      newQtyInput.name = 'cantidad[]';
+      newQtyInput.className = 'input-text cantidad-input';
+      newQtyInput.placeholder = 'Cantidad';
+      newQtyInput.min = '0';
+      newQtyInput.required = true;
+
+      // Nuevo select para unidad
+      const newUmSelect = document.createElement('select');
+      newUmSelect.name = 'und_de_medida[]';
+      newUmSelect.className = 'input-text';
+      newUmSelect.required = true;
+      newUmSelect.innerHTML = '<option value="">Selecciona la unidad</option>';
+      datosUndDeMedida.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        newUmSelect.appendChild(option);
+      });
+
+      newDiv.appendChild(autocompleteDiv);
+      newDiv.appendChild(newQtyInput);
+      newDiv.appendChild(newUmSelect);
+      fragment.appendChild(newDiv);
+      container.appendChild(fragment);
+
+      setupAutocompleteForDescripcion(newDescInput);
+    });
+
+    // Autocompletado para MAQUINA y SOLICITANTE
+    const maquinaInput = document.getElementById('maquinaInput');
+    const maquinaSuggestions = document.getElementById('maquinaSuggestions');
+    maquinaInput.addEventListener('input', debounce(function() {
+      mostrarSugerencias(maquinaInput, maquinaSuggestions, datosMaquina);
+    }, 300));
+
+    const solicitanteInput = document.getElementById('solicitanteInput');
+    const solicitanteSuggestions = document.getElementById('solicitanteSuggestions');
+    solicitanteInput.addEventListener('input', debounce(function() {
+      mostrarSugerencias(solicitanteInput, solicitanteSuggestions, datosSolicitante);
+    }, 300));
+
+    // Cerrar sugerencias al hacer clic fuera del contenedor
+    document.addEventListener('click', function(e) {
+      document.querySelectorAll('.autocomplete-container').forEach(container => {
+        if (!container.contains(e.target)) {
+          container.querySelectorAll('.suggestions-list').forEach(list => list.innerHTML = '');
+        }
+      });
+    });
+
+    // Funciones para mensajes de error
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
+    }
+    function clearError() {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = '';
+      errorDiv.style.display = 'none';
+    }
+
+    // Validación y envío del formulario
+    document.getElementById('miFormulario').addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearError();
+
+      const items = document.querySelectorAll('.descripcion-item');
+      let descripcionArray = [];
+      let cantidadArray = [];
+      let undArray = [];
+      let codigoMaquinaArray = [];
+
+      items.forEach(item => {
+        const descInput = item.querySelector('input[name="descripcion[]"]');
+        const qtyInput = item.querySelector('input[name="cantidad[]"]');
+        const umSelect = item.querySelector('select[name="und_de_medida[]"]');
+
+        if (!datosDescripcion.some(item => item.descripcion === descInput.value)) {
+          showError('Por favor, selecciona un valor válido para DESCRIPCION.');
+          descInput.focus();
+          return;
+        }
+        if (qtyInput.value.trim() === "") {
+          showError('Por favor, ingresa una cantidad válida.');
+          qtyInput.focus();
+          return;
+        }
+        if (umSelect.value === "") {
+          showError('Por favor, selecciona una unidad de medida.');
+          umSelect.focus();
+          return;
+        }
+        descripcionArray.push(descInput.value.trim());
+        cantidadArray.push(qtyInput.value.trim());
+        undArray.push(umSelect.value);
+        const hiddenCodigoInput = item.querySelector('input.codigo-maquina-hidden');
+        codigoMaquinaArray.push(hiddenCodigoInput && hiddenCodigoInput.value ? hiddenCodigoInput.value.trim() : "");
+      });
+
+      const tipoSelect = document.getElementById('tipo_de_pedidoSelect');
+      if (tipoSelect.value === "") {
+        showError('Por favor, selecciona un tipo de pedido.');
+        tipoSelect.focus();
+        return;
+      }
+
+      const form = this;
+      const data = {
+        descripcion: descripcionArray,
+        cantidad: cantidadArray,
+        und_de_medida: undArray,
+        codigo_maquina: codigoMaquinaArray,
+        tipo_de_pedido: tipoSelect.value,
+        ot: form.querySelector('input[name="ot"]').value,
+        detalle_ubicacion_maquina: form.querySelector('input[name="detalle_ubicacion_maquina"]').value,
+        maquina: maquinaInput.value,
+        solicitante: solicitanteInput.value,
+        jefe_responsable: form.querySelector('select[name="jefe_responsable"]').value
+      };
+
+      const spinner = document.getElementById('spinner');
+      const confirmationMessage = document.getElementById('confirmationMessage');
+      spinner.style.display = 'block';
+      confirmationMessage.style.display = 'none';
+
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwKnAzxJtVAkx7tED6OcFXWXfFQMFr7hpvW5uCd4jI6npEfkXo4fD2Rb4Gjiir55Xoc/exec';
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        spinner.style.display = 'none';
+        confirmationMessage.textContent = 'Su solicitud ha sido enviada correctamente.';
+        confirmationMessage.style.display = 'block';
+        form.reset();
+      })
+      .catch(error => {
+        spinner.style.display = 'none';
+        confirmationMessage.textContent = 'Error al enviar datos, por favor intente de nuevo.';
+        confirmationMessage.style.display = 'block';
+        console.error('Error!', error.message);
+      });
+    });
+  </script>
+</body>
+</html>
+
+

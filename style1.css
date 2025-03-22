@@ -1,0 +1,301 @@
+:root {
+    --blanco: #ffffff;
+    --oscuro: #2C3E50;
+    --primario: #3498db;
+    --secundario: #2ecc71;
+    --gris: #7f8c8d;
+    --grisclaro: #ecf0f1;
+    --fondo: #f4f7f8;
+    --input-bg: #ffffff;
+    --input-border: #dfe3e8;
+    --input-focus: #3498db;
+    --header-bg: #e74c3c;         /* Fondo alternativo si falla la imagen */
+    --header-text: #ffffff;
+    --error-bg: #f8d7da;
+    --error-text: #721c24;
+    --form-border: #3498db;
+}
+
+/* Reset y configuración global */
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding-top: 5rem;
+    font-size: 16px;
+    font-family: 'Krub', sans-serif;
+    background-color: var(--fondo);
+    color: var(--oscuro);
+}
+
+/* Encabezados */
+h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+/* Header principal con imagen industrial */
+header.header {
+    background-image: url('imagenes/industrial-background.jpg'); /* Ruta de la imagen industrial */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* Fallback en caso de no cargar la imagen */
+    background-color: var(--primario);
+    color: var(--blanco);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5rem;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    header.header {
+        padding: 0 1rem;
+        height: 4rem;
+        background-position: center;
+    }
+}
+
+/* Enlaces en el header */
+header.header a {
+    color: var(--blanco);
+    text-decoration: none;
+}
+
+.header__icono {
+    display: flex;
+    align-items: center;
+}
+
+/* Formulario */
+.formulario {
+    width: min(120rem, 96%);
+    margin: 2rem auto;
+    background-color: var(--blanco);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border: 2px solid var(--form-border);
+}
+
+/* Encabezado del formulario */
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.header-icon {
+    font-size: 2.4rem;
+}
+
+/* Mensaje de error */
+.error-message {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-text);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Contenedor de campos */
+.contenedor-campos {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .contenedor-campos {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo label {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--oscuro);
+}
+
+/* Inputs y áreas de texto */
+.input-text {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.4rem;
+    border: 1px solid var(--input-border);
+    border-radius: 0.5rem;
+    background-color: var(--input-bg);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-text:focus {
+    outline: none;
+    border-color: var(--input-focus);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+/* Personalización para selects */
+select.input-text {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10"><path fill="%233498db" d="M7 10L0 0h14z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+}
+
+/* Botón de envío */
+.boton {
+    display: inline-block;
+    background-color: var(--primario);
+    color: var(--blanco);
+    padding: 1.2rem 3rem;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.boton:hover {
+    background-color: var(--secundario);
+}
+
+/* Botón de agregar descripción */
+.add-btn {
+    background-color: var(--primario);
+    color: var(--blanco);
+    border: none;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.5rem;
+    align-self: flex-start;
+}
+
+.add-btn:hover {
+    background-color: var(--secundario);
+}
+
+/* Separación entre entradas de descripción */
+.descripcion-item {
+    margin-bottom: 1rem;
+}
+
+/* Spinner de carga */
+.spinner {
+    animation: rotate 2s linear infinite;
+    height: 50px;
+    width: 50px;
+    margin: auto;
+}
+.spinner .path {
+    stroke: var(--primario);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+@keyframes dash {
+    0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; }
+    50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; }
+}
+
+/* Mensaje de confirmación */
+#confirmationMessage {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: var(--secundario);
+    color: var(--blanco);
+    border: 1px solid var(--secundario);
+    border-radius: 0.5rem;
+    text-align: center;
+    font-size: 1.6rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 1.4rem;
+    color: var(--gris);
+    margin-top: 2rem;
+}
+
+/* Autocompletar personalizado */
+.autocomplete-container {
+    position: relative;
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--blanco);
+    border: 1px solid var(--input-border);
+    border-top: none;
+    max-height: 600px; /* Aumentado para mostrar al menos 10 opciones en PC */
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.suggestions-list li {
+    padding: 1.2rem; /* Incrementado para mayor visibilidad */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.suggestions-list li:hover {
+    background-color: var(--grisclaro);
+}
+
+/* En móviles, ajustar la lista de sugerencias */
+@media (max-width: 600px) {
+    .suggestions-list {
+        max-height: 700px;
+        font-size: 1.8rem;
+    }
+}
+
