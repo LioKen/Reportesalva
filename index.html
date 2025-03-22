@@ -52,29 +52,42 @@
         <!-- Mensaje de error -->
         <div id="errorMessage" class="error-message" style="display: none;"></div>
         
+
+        <!--
         <div class="contenedor-campos">
           <!-- CAMPO: DESCRIPCION, CANTIDAD y UNIDAD DE MEDIDA -->
-          <div class="campo">
+<!--          <div class="campo">
             <label>DESCRIPCION</label>
             <div id="descripcion-container">
               <div class="descripcion-item">
                 <!-- Contenedor exclusivo para el input autocompletable -->
-                <div class="autocomplete-container">
+  <!--              <div class="autocomplete-container">
                   <input type="text" name="descripcion[]" class="input-text descripcion-input" placeholder="Descripción" autocomplete="off" required>
                   <ul class="suggestions-list"></ul>
                 </div>
                 <!-- Campo de cantidad -->
-                <input type="number" name="cantidad[]" class="input-text cantidad-input" placeholder="Cantidad" min="0" required>
+   <!--             <input type="number" name="cantidad[]" class="input-text cantidad-input" placeholder="Cantidad" min="0" required>
                 <!-- Campo select para unidad -->
-                <select name="und_de_medida[]" class="input-text" required>
+    <!--            <select name="und_de_medida[]" class="input-text" required>
                   <option value="">Selecciona la unidad</option>
                 </select>
               </div>
             </div>
             <button type="button" id="addDescripcion" class="add-btn">+ Agregar</button>
+          </div> -->
+
+      
+          <!-- MAQUINA -->
+          <div class="campo">
+            <label>MAQUINA</label>
+            <div class="autocomplete-container">
+              <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
+              <ul id="maquinaSuggestions" class="suggestions-list"></ul>
+            </div>
           </div>
 
-          <!-- TIPO DE PEDIDO -->
+        
+          <!-- TIPO DE ACTIVIDAD -->
           <div class="campo">
             <label>TIPO DE PEDIDO</label>
             <select id="tipo_de_pedidoSelect" name="tipo_de_pedido" class="input-text" required>
@@ -88,22 +101,39 @@
             <input name="ot" class="input-text" type="text" placeholder="Ingresa la OT" required>
           </div>
 
-          <!-- DETALLE UBICACION EN MAQUINA -->
+          <!-- DESCRIPCION DEL EVENTO -->
           <div class="campo">
             <label>DETALLE UBICACION EN MAQUINA</label>
             <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
           </div>
 
-          <!-- MAQUINA -->
+          <!-- SOLUCION DEL EVENTO -->
           <div class="campo">
-            <label>MAQUINA</label>
-            <div class="autocomplete-container">
-              <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
-              <ul id="maquinaSuggestions" class="suggestions-list"></ul>
-            </div>
+            <label>DETALLE UBICACION EN MAQUINA</label>
+            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
           </div>
 
-          <!-- SOLICITANTE -->
+          <!-- CAUSA RAIZ -->
+          <div class="campo">
+            <label>DETALLE UBICACION EN MAQUINA</label>
+            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
+          </div>
+
+
+          <!-- FECHA INICIAL -->
+          <div class="campo">
+            <label>DETALLE UBICACION EN MAQUINA</label>
+            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
+          </div>
+
+           <!-- DURACION -->
+          <div class="campo">
+            <label>DETALLE UBICACION EN MAQUINA</label>
+            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
+          </div>
+  
+        
+          <!-- TECNICO -->
           <div class="campo">
             <label>SOLICITANTE</label>
             <div class="autocomplete-container">
@@ -112,16 +142,6 @@
             </div>
           </div>
 
-          <!-- JEFE RESPONSABLE -->
-          <div class="campo">
-            <label>JEFE RESPONSABLE</label>
-            <select name="jefe_responsable" class="input-text" required>
-              <option value="">Selecciona el jefe</option>
-              <option value="ANTONY CARRANZA">ANTONY CARRANZA</option>
-              <option value="PEDRO MATOS">PEDRO MATOS</option>
-            </select>
-          </div>
-        </div>
 
         <div class="alinear-derecha flex">
           <input class="boton wm-sm-100" type="submit" value="Enviar">
@@ -155,9 +175,6 @@
     }
 
     // Variables para almacenar datos (se cargarán desde opciones.json)
-    let datosDescripcion = [];
-    let datosUndDeMedida = [];
-    let datosTipoDePedido = [];
     let datosMaquina = [];
     let datosSolicitante = [];
 
@@ -166,19 +183,11 @@
       .then(response => response.json())
       .then(data => {
         // Usamos el array "items" (en minúsculas) para autocompletar la descripción
-        datosDescripcion = data.items || [];
-        datosUndDeMedida = data.und_de_medida || [];
-        datosTipoDePedido = data.tipo_de_pedido || [];
         datosMaquina = data.maquina || [];
         datosSolicitante = data.solicitante || [];
 
         // Poblar el select de "TIPO DE PEDIDO"
         populateSelect('tipo_de_pedidoSelect', datosTipoDePedido);
-
-        // Poblar el select de unidad de medida del primer input de descripción
-        const firstUmSelect = document.querySelector('#descripcion-container select[name="und_de_medida[]"]');
-        if (firstUmSelect) {
-          populateUnidadSelect(firstUmSelect, datosUndDeMedida);
         }
       })
       .catch(error => console.error('Error al cargar el archivo JSON:', error));
@@ -186,17 +195,6 @@
     // Función para poblar un select dado su id
     function populateSelect(selectId, optionsArray) {
       const selectElement = document.getElementById(selectId);
-      optionsArray.forEach(optionValue => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        option.textContent = optionValue;
-        selectElement.appendChild(option);
-      });
-    }
-
-    // Función para poblar un select de unidad
-    function populateUnidadSelect(selectElement, optionsArray) {
-      selectElement.innerHTML = '<option value="">Selecciona la unidad</option>';
       optionsArray.forEach(optionValue => {
         const option = document.createElement('option');
         option.value = optionValue;
@@ -267,51 +265,6 @@
       const newDiv = document.createElement('div');
       newDiv.className = 'descripcion-item';
 
-      // Crear contenedor exclusivo para el input autocompletable
-      const autocompleteDiv = document.createElement('div');
-      autocompleteDiv.className = 'autocomplete-container';
-      const newDescInput = document.createElement('input');
-      newDescInput.type = 'text';
-      newDescInput.name = 'descripcion[]';
-      newDescInput.className = 'input-text descripcion-input';
-      newDescInput.placeholder = 'Descripción';
-      newDescInput.setAttribute('autocomplete', 'off');
-      newDescInput.required = true;
-      autocompleteDiv.appendChild(newDescInput);
-      const newUl = document.createElement('ul');
-      newUl.className = 'suggestions-list';
-      autocompleteDiv.appendChild(newUl);
-
-      // Nuevo input para cantidad
-      const newQtyInput = document.createElement('input');
-      newQtyInput.type = 'number';
-      newQtyInput.name = 'cantidad[]';
-      newQtyInput.className = 'input-text cantidad-input';
-      newQtyInput.placeholder = 'Cantidad';
-      newQtyInput.min = '0';
-      newQtyInput.required = true;
-
-      // Nuevo select para unidad
-      const newUmSelect = document.createElement('select');
-      newUmSelect.name = 'und_de_medida[]';
-      newUmSelect.className = 'input-text';
-      newUmSelect.required = true;
-      newUmSelect.innerHTML = '<option value="">Selecciona la unidad</option>';
-      datosUndDeMedida.forEach(optionValue => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        option.textContent = optionValue;
-        newUmSelect.appendChild(option);
-      });
-
-      newDiv.appendChild(autocompleteDiv);
-      newDiv.appendChild(newQtyInput);
-      newDiv.appendChild(newUmSelect);
-      fragment.appendChild(newDiv);
-      container.appendChild(fragment);
-
-      setupAutocompleteForDescripcion(newDescInput);
-    });
 
     // Autocompletado para MAQUINA y SOLICITANTE
     const maquinaInput = document.getElementById('maquinaInput');
@@ -359,28 +312,6 @@
       let codigoMaquinaArray = [];
 
       items.forEach(item => {
-        const descInput = item.querySelector('input[name="descripcion[]"]');
-        const qtyInput = item.querySelector('input[name="cantidad[]"]');
-        const umSelect = item.querySelector('select[name="und_de_medida[]"]');
-
-        if (!datosDescripcion.some(item => item.descripcion === descInput.value)) {
-          showError('Por favor, selecciona un valor válido para DESCRIPCION.');
-          descInput.focus();
-          return;
-        }
-        if (qtyInput.value.trim() === "") {
-          showError('Por favor, ingresa una cantidad válida.');
-          qtyInput.focus();
-          return;
-        }
-        if (umSelect.value === "") {
-          showError('Por favor, selecciona una unidad de medida.');
-          umSelect.focus();
-          return;
-        }
-        descripcionArray.push(descInput.value.trim());
-        cantidadArray.push(qtyInput.value.trim());
-        undArray.push(umSelect.value);
         const hiddenCodigoInput = item.querySelector('input.codigo-maquina-hidden');
         codigoMaquinaArray.push(hiddenCodigoInput && hiddenCodigoInput.value ? hiddenCodigoInput.value.trim() : "");
       });
@@ -394,9 +325,6 @@
 
       const form = this;
       const data = {
-        descripcion: descripcionArray,
-        cantidad: cantidadArray,
-        und_de_medida: undArray,
         codigo_maquina: codigoMaquinaArray,
         tipo_de_pedido: tipoSelect.value,
         ot: form.querySelector('input[name="ot"]').value,
