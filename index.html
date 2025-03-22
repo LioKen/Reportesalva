@@ -15,8 +15,6 @@
   
   <link rel="preload" href="style1.css" as="style">
   <link rel="stylesheet" href="style1.css">
-
-  <!-- Estilos adicionales para autocompletado y header -->
 </head>
 <body>
   <header class="header">
@@ -53,95 +51,73 @@
         <div id="errorMessage" class="error-message" style="display: none;"></div>
         
 
-        <!--
-        <div class="contenedor-campos">
-          <!-- CAMPO: DESCRIPCION, CANTIDAD y UNIDAD DE MEDIDA -->
-<!--          <div class="campo">
-            <label>DESCRIPCION</label>
-            <div id="descripcion-container">
-              <div class="descripcion-item">
-                <!-- Contenedor exclusivo para el input autocompletable -->
-  <!--              <div class="autocomplete-container">
-                  <input type="text" name="descripcion[]" class="input-text descripcion-input" placeholder="Descripción" autocomplete="off" required>
-                  <ul class="suggestions-list"></ul>
-                </div>
-                <!-- Campo de cantidad -->
-   <!--             <input type="number" name="cantidad[]" class="input-text cantidad-input" placeholder="Cantidad" min="0" required>
-                <!-- Campo select para unidad -->
-    <!--            <select name="und_de_medida[]" class="input-text" required>
-                  <option value="">Selecciona la unidad</option>
-                </select>
-              </div>
-            </div>
-            <button type="button" id="addDescripcion" class="add-btn">+ Agregar</button>
-          </div> -->
-
-      
-          <!-- MAQUINA -->
-          <div class="campo">
-            <label>MAQUINA</label>
-            <div class="autocomplete-container">
-              <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
-              <ul id="maquinaSuggestions" class="suggestions-list"></ul>
-            </div>
+        <!-- Campo: MAQUINA (autocompletable) -->
+        <div class="campo">
+          <label for="maquinaInput">MAQUINA</label>
+          <div class="autocomplete-container">
+            <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
+            <ul id="maquinaSuggestions" class="suggestions-list"></ul>
           </div>
+        </div>
 
-        
-          <!-- TIPO DE ACTIVIDAD -->
-          <div class="campo">
-            <label>TIPO DE PEDIDO</label>
-            <select id="tipo_de_pedidoSelect" name="tipo_de_pedido" class="input-text" required>
-              <option value="">Selecciona el tipo de pedido</option>
-            </select>
-          </div>
+        <!-- Campo: TIPO DE PEDIDO -->
+        <div class="campo">
+          <label for="tipo_de_pedidoSelect">TIPO DE PEDIDO</label>
+          <select id="tipo_de_pedidoSelect" name="tipo_de_pedido" class="input-text" required>
+            <option value="">Selecciona el tipo de pedido</option>
+          </select>
+        </div>
 
-          <!-- OT -->
-          <div class="campo">
-            <label>OT</label>
-            <input name="ot" class="input-text" type="text" placeholder="Ingresa la OT" required>
-          </div>
+        <!-- Campo: OT -->
+        <div class="campo">
+          <label for="ot">OT</label>
+          <input type="text" id="ot" name="ot" class="input-text" placeholder="Ingresa la OT" required>
+        </div>
 
-          <!-- DESCRIPCION DEL EVENTO -->
-          <div class="campo">
-            <label>DETALLE UBICACION EN MAQUINA</label>
-            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
-          </div>
+        <!-- Campo: DESCRIPCIÓN DEL EVENTO -->
+        <div class="campo">
+          <label for="descripcion_evento">DESCRIPCIÓN DEL EVENTO</label>
+          <textarea id="descripcion_evento" name="descripcion_evento" class="input-text" placeholder="Describa el evento" required></textarea>
+        </div>
 
-          <!-- SOLUCION DEL EVENTO -->
-          <div class="campo">
-            <label>DETALLE UBICACION EN MAQUINA</label>
-            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
-          </div>
+        <!-- Campo: SOLUCIÓN DEL EVENTO -->
+        <div class="campo">
+          <label for="solucion_evento">SOLUCIÓN DEL EVENTO</label>
+          <textarea id="solucion_evento" name="solucion_evento" class="input-text" placeholder="Describa la solución" required></textarea>
+        </div>
 
-          <!-- CAUSA RAIZ -->
-          <div class="campo">
-            <label>DETALLE UBICACION EN MAQUINA</label>
-            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
-          </div>
+        <!-- Campo: CAUSA RAIZ -->
+        <div class="campo">
+          <label for="causa_raiz">CAUSA RAIZ</label>
+          <textarea id="causa_raiz" name="causa_raiz" class="input-text" placeholder="Indique la causa raíz" required></textarea>
+        </div>
 
+        <!-- Campo: FECHA INICIAL -->
+        <div class="campo">
+          <label for="fecha_inicial">FECHA INICIAL</label>
+          <input type="date" id="fecha_inicial" name="fecha_inicial" class="input-text" required>
+        </div>
 
-          <!-- FECHA INICIAL -->
-          <div class="campo">
-            <label>DETALLE UBICACION EN MAQUINA</label>
-            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
-          </div>
+        <!-- Campo: HORA INICIAL -->
+        <div class="campo">
+          <label for="hora_inicial">HORA INICIAL</label>
+          <input type="time" id="hora_inicial" name="hora_inicial" class="input-text" required>
+        </div>
 
-           <!-- DURACION -->
-          <div class="campo">
-            <label>DETALLE UBICACION EN MAQUINA</label>
-            <input name="detalle_ubicacion_maquina" class="input-text" type="text" placeholder="Ingresa el detalle de la ubicación" required>
-          </div>
+        <!-- Campo: DURACIÓN -->
+        <div class="campo">
+          <label for="duracion">DURACIÓN</label>
+          <input type="text" id="duracion" name="duracion" class="input-text" placeholder="Ej. 2 horas" required>
+        </div>
   
-        
-          <!-- TECNICO -->
-          <div class="campo">
-            <label>SOLICITANTE</label>
-            <div class="autocomplete-container">
-              <input type="text" id="solicitanteInput" name="solicitante" class="input-text" placeholder="Selecciona o escribe el solicitante" autocomplete="off" required>
-              <ul id="solicitanteSuggestions" class="suggestions-list"></ul>
-            </div>
+        <!-- Campo: SOLICITANTE (autocompletable) -->
+        <div class="campo">
+          <label for="solicitanteInput">SOLICITANTE</label>
+          <div class="autocomplete-container">
+            <input type="text" id="solicitanteInput" name="solicitante" class="input-text" placeholder="Selecciona o escribe el solicitante" autocomplete="off" required>
+            <ul id="solicitanteSuggestions" class="suggestions-list"></ul>
           </div>
-
+        </div>
 
         <div class="alinear-derecha flex">
           <input class="boton wm-sm-100" type="submit" value="Enviar">
@@ -177,18 +153,18 @@
     // Variables para almacenar datos (se cargarán desde opciones.json)
     let datosMaquina = [];
     let datosSolicitante = [];
+    // Opciones para el select "TIPO DE PEDIDO"
+    let datosTipoDePedido = ["Emergencia", "Correctivo", "Preventivo"];
 
     // Cargar datos desde opciones.json (se carga una sola vez)
     fetch('opciones.json')
       .then(response => response.json())
       .then(data => {
-        // Usamos el array "items" (en minúsculas) para autocompletar la descripción
+        // Usamos el array "maquina" y "solicitante" para autocompletar
         datosMaquina = data.maquina || [];
         datosSolicitante = data.solicitante || [];
-
         // Poblar el select de "TIPO DE PEDIDO"
         populateSelect('tipo_de_pedidoSelect', datosTipoDePedido);
-        }
       })
       .catch(error => console.error('Error al cargar el archivo JSON:', error));
 
@@ -244,38 +220,16 @@
       suggestionsElement.appendChild(fragment);
     }
 
-    // Configurar autocompletado con debounce
-    function setupAutocompleteForDescripcion(input) {
-      const container = input.closest('.autocomplete-container');
-      const suggestionsList = container.querySelector('.suggestions-list');
-      input.addEventListener('input', debounce(function() {
-        mostrarSugerencias(input, suggestionsList, datosDescripcion);
-      }, 300));
-    }
-
-    // Inicializar autocompletado para todos los inputs de descripción
-    document.querySelectorAll('.descripcion-input').forEach(input => {
-      setupAutocompleteForDescripcion(input);
-    });
-
-    // Agregar nuevas filas con DocumentFragment para mejorar el rendimiento
-    document.getElementById('addDescripcion').addEventListener('click', function() {
-      const container = document.getElementById('descripcion-container');
-      const fragment = document.createDocumentFragment();
-      const newDiv = document.createElement('div');
-      newDiv.className = 'descripcion-item';
-
-
-    // Autocompletado para MAQUINA y SOLICITANTE
+    // Configurar autocompletado para MAQUINA y SOLICITANTE
     const maquinaInput = document.getElementById('maquinaInput');
     const maquinaSuggestions = document.getElementById('maquinaSuggestions');
-    maquinaInput.addEventListener('input', debounce(function() {
+    maquinaInput.addEventListener('input', debounce(() => {
       mostrarSugerencias(maquinaInput, maquinaSuggestions, datosMaquina);
     }, 300));
 
     const solicitanteInput = document.getElementById('solicitanteInput');
     const solicitanteSuggestions = document.getElementById('solicitanteSuggestions');
-    solicitanteInput.addEventListener('input', debounce(function() {
+    solicitanteInput.addEventListener('input', debounce(() => {
       mostrarSugerencias(solicitanteInput, solicitanteSuggestions, datosSolicitante);
     }, 300));
 
@@ -300,22 +254,32 @@
       errorDiv.style.display = 'none';
     }
 
-    // Validación y envío del formulario
+    // Validación y envío del formulario con integración a Google Sheets
     document.getElementById('miFormulario').addEventListener('submit', function(e) {
       e.preventDefault();
       clearError();
 
-      const items = document.querySelectorAll('.descripcion-item');
-      let descripcionArray = [];
-      let cantidadArray = [];
-      let undArray = [];
-      let codigoMaquinaArray = [];
+      const form = this;
+      const data = {
+        diga: form.querySelector('input[name="diga"]').value,
+        codigo_maquina: (() => {
+          const container = maquinaInput.closest('.autocomplete-container');
+          const hiddenInput = container.querySelector('input.codigo-maquina-hidden');
+          return hiddenInput ? hiddenInput.value.trim() : "";
+        })(),
+        tipo_de_pedido: document.getElementById('tipo_de_pedidoSelect').value,
+        ot: form.querySelector('input[name="ot"]').value,
+        descripcion_evento: form.querySelector('textarea[name="descripcion_evento"]').value,
+        solucion_evento: form.querySelector('textarea[name="solucion_evento"]').value,
+        causa_raiz: form.querySelector('textarea[name="causa_raiz"]').value,
+        fecha_inicial: form.querySelector('input[name="fecha_inicial"]').value,
+        hora_inicial: form.querySelector('input[name="hora_inicial"]').value,
+        duracion: form.querySelector('input[name="duracion"]').value,
+        maquina: maquinaInput.value,
+        solicitante: solicitanteInput.value
+      };
 
-      items.forEach(item => {
-        const hiddenCodigoInput = item.querySelector('input.codigo-maquina-hidden');
-        codigoMaquinaArray.push(hiddenCodigoInput && hiddenCodigoInput.value ? hiddenCodigoInput.value.trim() : "");
-      });
-
+      // Validación mínima: revisar si el select "tipo_de_pedido" tiene valor
       const tipoSelect = document.getElementById('tipo_de_pedidoSelect');
       if (tipoSelect.value === "") {
         showError('Por favor, selecciona un tipo de pedido.');
@@ -323,22 +287,12 @@
         return;
       }
 
-      const form = this;
-      const data = {
-        codigo_maquina: codigoMaquinaArray,
-        tipo_de_pedido: tipoSelect.value,
-        ot: form.querySelector('input[name="ot"]').value,
-        detalle_ubicacion_maquina: form.querySelector('input[name="detalle_ubicacion_maquina"]').value,
-        maquina: maquinaInput.value,
-        solicitante: solicitanteInput.value,
-        jefe_responsable: form.querySelector('select[name="jefe_responsable"]').value
-      };
-
       const spinner = document.getElementById('spinner');
       const confirmationMessage = document.getElementById('confirmationMessage');
       spinner.style.display = 'block';
       confirmationMessage.style.display = 'none';
 
+      // URL del script de Google Apps Script (reemplaza con tu URL)
       const scriptURL = 'https://script.google.com/macros/s/AKfycbz1lAhkTNBYTAebc69wzman-zidETvqDqfDZ1AeaUODq3iPx5AvnaJVlBbcaz5VzRk3VA/exec';
       fetch(scriptURL, {
         method: 'POST',
@@ -362,5 +316,3 @@
   </script>
 </body>
 </html>
-
-
