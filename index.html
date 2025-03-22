@@ -3,54 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario Reporte de Mantenimiento</title>
+  <title>Reporte de Mantenimiento</title>
 
-  <!-- Preload y enlaces a hojas de estilo externas -->
-  <link rel="preload" href="normalize.css" as="style">
-  <link rel="stylesheet" href="normalize.css">
-  
+  <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto&display=swap" rel="stylesheet">
-  
-  <link rel="preload" href="style1.css" as="style">
-  <link rel="stylesheet" href="style1.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+
+  <style>
+    /* Paleta y estilos industriales */
+    body {
+      background-color: #1a1a1a;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    main {
+      padding: 2rem;
+    }
+    .formulario {
+      background-color: #2b2b2b;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .form-header .machine-icon {
+      width: 60px;
+      height: auto;
+      fill: #ff6600;
+      margin-bottom: 0.5rem;
+    }
+    .form-header h2 {
+      margin: 0;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: #ff6600;
+    }
+    .campo {
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    .campo label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #ccc;
+    }
+    .campo input[type="text"],
+    .campo input[type="date"],
+    .campo input[type="time"],
+    .campo select,
+    .campo textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 1rem;
+      background-color: #333;
+      color: #fff;
+    }
+    .campo textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .autocomplete-container {
+      position: relative;
+    }
+    .suggestions-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #444;
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      background-color: #333;
+      position: absolute;
+      width: calc(100% - 2px);
+      z-index: 10;
+    }
+    .suggestions-list li {
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+    .suggestions-list li:hover {
+      background-color: #444;
+    }
+    .boton {
+      background-color: #ff6600;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+    .boton:hover {
+      background-color: #e65c00;
+    }
+    #errorMessage {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #ff3333;
+    }
+    #spinner {
+      margin-top: 10px;
+    }
+    .spinner {
+      animation: rotar 1s linear infinite;
+      width: 50px;
+      height: 50px;
+    }
+    @keyframes rotar {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="header__logo">
-      <a href="index.html">
-        <!-- Logo SVG -->
-        <svg width="131" height="44" viewBox="0 0 131 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Aquí van los paths de tu logo -->
-        </svg>
-      </a>
-    </div>
-    <div class="header__icono">
-      <a href="index.html">
-        <!-- Home icon SVG -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="#005286" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-          <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
-          <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-          <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-        </svg>
-      </a>
-    </div>
-  </header>
-
   <main>
     <section>
       <form id="miFormulario" class="formulario">
-        <!-- Encabezado -->
         <div class="form-header">
-          <span class="header-icon">📝</span>
-          <h2>Formulario Reporte de Mantenimiento</h2>
+          <!-- Icono de máquina industrial -->
+          <svg class="machine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <rect x="8" y="20" width="48" height="24" rx="4" ry="4"/>
+            <rect x="4" y="24" width="56" height="16" fill="#555"/>
+            <circle cx="20" cy="44" r="4"/>
+            <circle cx="44" cy="44" r="4"/>
+          </svg>
+          <h2>Reporte de Mantenimiento</h2>
         </div>
-        <!-- Mensaje de error -->
         <div id="errorMessage" class="error-message" style="display: none;"></div>
         
-
         <!-- Campo: MAQUINA (autocompletable) -->
         <div class="campo">
           <label for="maquinaInput">MAQUINA</label>
@@ -110,37 +209,37 @@
           <input type="text" id="duracion" name="duracion" class="input-text" placeholder="Ej. 2 horas" required>
         </div>
   
-        <!-- Campo: SOLICITANTE (autocompletable) -->
+        <!-- Campo: TÉCNICO (autocompletable) -->
         <div class="campo">
-          <label for="solicitanteInput">SOLICITANTE</label>
+          <label for="tecnicoInput">TÉCNICO</label>
           <div class="autocomplete-container">
-            <input type="text" id="solicitanteInput" name="solicitante" class="input-text" placeholder="Selecciona o escribe el solicitante" autocomplete="off" required>
-            <ul id="solicitanteSuggestions" class="suggestions-list"></ul>
+            <input type="text" id="tecnicoInput" name="tecnico" class="input-text" placeholder="Selecciona o escribe el técnico" autocomplete="off" required>
+            <ul id="tecnicoSuggestions" class="suggestions-list"></ul>
           </div>
         </div>
 
-        <div class="alinear-derecha flex">
-          <input class="boton wm-sm-100" type="submit" value="Enviar">
+        <div style="text-align: center;">
+          <input class="boton" type="submit" value="Enviar">
         </div>
 
         <!-- Spinner y mensaje de confirmación -->
-        <div id="spinner" style="display: none; text-align: center; margin-top: 10px;">
+        <div id="spinner" style="display: none; text-align: center;">
           <svg class="spinner" viewBox="0 0 50 50">
-            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#ff6600" stroke-width="5"></circle>
           </svg>
         </div>
-        <div id="confirmationMessage" style="display: none;"></div>
+        <div id="confirmationMessage" style="display: none; text-align: center; margin-top: 10px;"></div>
       </form>
     </section>
   </main>
 
   <footer>
-    Por favor, si tiene inconvenientes, comuníquese con ********
+    Si tiene inconvenientes, comuníquese con ********
   </footer>
 
   <!-- Scripts -->
   <script>
-    /* --- Función debounce para optimizar el input de autocompletado --- */
+    // Función debounce para optimizar el autocompletado
     function debounce(func, delay) {
       let timeout;
       return function(...args) {
@@ -150,25 +249,24 @@
       };
     }
 
-    // Variables para almacenar datos (se cargarán desde opciones.json)
+    // Variables para datos (desde opciones.json)
     let datosMaquina = [];
-    let datosSolicitante = [];
+    let datosTecnico = [];
     // Opciones para el select "TIPO DE PEDIDO"
     let datosTipoDePedido = ["Emergencia", "Correctivo", "Preventivo"];
 
-    // Cargar datos desde opciones.json (se carga una sola vez)
+    // Cargar datos desde opciones.json
     fetch('opciones.json')
       .then(response => response.json())
       .then(data => {
-        // Usamos el array "maquina" y "solicitante" para autocompletar
         datosMaquina = data.maquina || [];
-        datosSolicitante = data.solicitante || [];
-        // Poblar el select de "TIPO DE PEDIDO"
+        // En este caso se espera que en el JSON el campo para técnicos se llame "tecnico"
+        datosTecnico = data.tecnico || [];
         populateSelect('tipo_de_pedidoSelect', datosTipoDePedido);
       })
-      .catch(error => console.error('Error al cargar el archivo JSON:', error));
+      .catch(error => console.error('Error al cargar el JSON:', error));
 
-    // Función para poblar un select dado su id
+    // Poblar select
     function populateSelect(selectId, optionsArray) {
       const selectElement = document.getElementById(selectId);
       optionsArray.forEach(optionValue => {
@@ -179,17 +277,16 @@
       });
     }
 
-    // Función para mostrar sugerencias en el input
+    // Mostrar sugerencias
     function mostrarSugerencias(inputElement, suggestionsElement, datos) {
       const query = inputElement.value.toLowerCase();
       suggestionsElement.innerHTML = '';
       let filtrados = [];
-      if (datos.length > 0 && typeof datos[0] === 'object') {
+      if (datos.length && typeof datos[0] === 'object') {
         filtrados = datos.filter(item => item.descripcion.toLowerCase().includes(query));
       } else {
         filtrados = datos.filter(item => item.toLowerCase().includes(query));
       }
-      // Usar DocumentFragment para minimizar reflows
       const fragment = document.createDocumentFragment();
       filtrados.forEach(item => {
         const li = document.createElement('li');
@@ -200,19 +297,20 @@
           li.textContent = item;
         }
         li.addEventListener('click', () => {
-          inputElement.value = typeof item === 'object' ? item.descripcion : item;
+          inputElement.value = (typeof item === 'object') ? item.descripcion : item;
           suggestionsElement.innerHTML = '';
           const container = inputElement.closest('.autocomplete-container');
           if (container) {
-            let hiddenCodigoInput = container.querySelector('input.codigo-maquina-hidden');
-            if (!hiddenCodigoInput) {
-              hiddenCodigoInput = document.createElement('input');
-              hiddenCodigoInput.type = 'hidden';
-              hiddenCodigoInput.name = 'codigo_maquina[]';
-              hiddenCodigoInput.className = 'codigo-maquina-hidden';
-              container.appendChild(hiddenCodigoInput);
+            let hiddenInput = container.querySelector('input.codigo-maquina-hidden');
+            if (!hiddenInput) {
+              hiddenInput = document.createElement('input');
+              hiddenInput.type = 'hidden';
+              // Para el autocompletado de máquina
+              hiddenInput.name = inputElement.getAttribute('name') + '_codigo';
+              hiddenInput.className = 'codigo-maquina-hidden';
+              container.appendChild(hiddenInput);
             }
-            hiddenCodigoInput.value = li.getAttribute('data-codigo') || '';
+            hiddenInput.value = li.getAttribute('data-codigo') || '';
           }
         });
         fragment.appendChild(li);
@@ -220,21 +318,22 @@
       suggestionsElement.appendChild(fragment);
     }
 
-    // Configurar autocompletado para MAQUINA y SOLICITANTE
+    // Configurar autocompletado para MAQUINA
     const maquinaInput = document.getElementById('maquinaInput');
     const maquinaSuggestions = document.getElementById('maquinaSuggestions');
     maquinaInput.addEventListener('input', debounce(() => {
       mostrarSugerencias(maquinaInput, maquinaSuggestions, datosMaquina);
     }, 300));
 
-    const solicitanteInput = document.getElementById('solicitanteInput');
-    const solicitanteSuggestions = document.getElementById('solicitanteSuggestions');
-    solicitanteInput.addEventListener('input', debounce(() => {
-      mostrarSugerencias(solicitanteInput, solicitanteSuggestions, datosSolicitante);
+    // Configurar autocompletado para TÉCNICO
+    const tecnicoInput = document.getElementById('tecnicoInput');
+    const tecnicoSuggestions = document.getElementById('tecnicoSuggestions');
+    tecnicoInput.addEventListener('input', debounce(() => {
+      mostrarSugerencias(tecnicoInput, tecnicoSuggestions, datosTecnico);
     }, 300));
 
-    // Cerrar sugerencias al hacer clic fuera del contenedor
-    document.addEventListener('click', function(e) {
+    // Cerrar sugerencias al hacer clic fuera
+    document.addEventListener('click', e => {
       document.querySelectorAll('.autocomplete-container').forEach(container => {
         if (!container.contains(e.target)) {
           container.querySelectorAll('.suggestions-list').forEach(list => list.innerHTML = '');
@@ -254,14 +353,12 @@
       errorDiv.style.display = 'none';
     }
 
-    // Validación y envío del formulario con integración a Google Sheets
+    // Envío del formulario con integración a Google Sheets
     document.getElementById('miFormulario').addEventListener('submit', function(e) {
       e.preventDefault();
       clearError();
-
       const form = this;
       const data = {
-        diga: form.querySelector('input[name="diga"]').value,
         codigo_maquina: (() => {
           const container = maquinaInput.closest('.autocomplete-container');
           const hiddenInput = container.querySelector('input.codigo-maquina-hidden');
@@ -276,10 +373,9 @@
         hora_inicial: form.querySelector('input[name="hora_inicial"]').value,
         duracion: form.querySelector('input[name="duracion"]').value,
         maquina: maquinaInput.value,
-        solicitante: solicitanteInput.value
+        tecnico: tecnicoInput.value
       };
 
-      // Validación mínima: revisar si el select "tipo_de_pedido" tiene valor
       const tipoSelect = document.getElementById('tipo_de_pedidoSelect');
       if (tipoSelect.value === "") {
         showError('Por favor, selecciona un tipo de pedido.');
@@ -292,7 +388,7 @@
       spinner.style.display = 'block';
       confirmationMessage.style.display = 'none';
 
-      // URL del script de Google Apps Script (reemplaza con tu URL)
+      // URL de Google Apps Script (reemplaza con tu URL)
       const scriptURL = 'https://script.google.com/macros/s/AKfycbz1lAhkTNBYTAebc69wzman-zidETvqDqfDZ1AeaUODq3iPx5AvnaJVlBbcaz5VzRk3VA/exec';
       fetch(scriptURL, {
         method: 'POST',
