@@ -183,7 +183,7 @@
 
         <!-- Campo: TIPO DE ACTIVIDAD (obligatorio) -->
         <div class="campo">
-          <label for="tipo_de_actividadSelect">tipo_de_actividad</label>
+          <label for="tipo_de_actividadSelect">TIPO DE ACTIVIDAD</label>
           <select id="tipo_de_actividadSelect" name="tipo_de_actividad" class="input-text" required>
             <option value="">Selecciona el tipo de actividad</option>
           </select>
@@ -275,7 +275,7 @@
     let datosMaquina = [];
     let datosTecnico = [];
     // Opciones para el select "TIPO DE ACTIVIDAD"
-    let datostipo_de_actividad = ["Emergencia", "Correctivo", "Preventivo"];
+    let datosTipoDeActividad = ["Emergencia", "Correctivo", "Preventivo"];
 
     // Cargar datos desde opciones.json
     fetch('opciones.json')
@@ -284,7 +284,7 @@
         datosMaquina = data.maquina || [];
         // Se espera que en el JSON el arreglo para técnicos se llame "tecnico"
         datosTecnico = data.tecnico || [];
-        populateSelect('tipo_de_pedidoSelect', datosTipoDePedido);
+        populateSelect('tipo_de_actividadSelect', datosTipoDeActividad);
       })
       .catch(error => console.error('Error al cargar el JSON:', error));
 
@@ -386,7 +386,7 @@
           const hiddenInput = container.querySelector('input.codigo-maquina-hidden');
           return hiddenInput ? hiddenInput.value.trim() : "";
         })(),
-        tipo_de_pedido: document.getElementById('tipo_de_pedidoSelect').value,
+        tipo_de_actividad: document.getElementById('tipo_de_actividadSelect').value,
         ot: form.querySelector('input[name="ot"]').value,
         descripcion_evento: form.querySelector('textarea[name="descripcion_evento"]').value,
         solucion_evento: form.querySelector('textarea[name="solucion_evento"]').value,
@@ -398,7 +398,7 @@
         tecnico: tecnicoInput.value
       };
 
-      const tipoSelect = document.getElementById('tipo_de_pedidoSelect');
+      const tipoSelect = document.getElementById('tipo_de_actividadSelect');
       if (tipoSelect.value === "") {
         showError('Por favor, selecciona un tipo de actividad.');
         tipoSelect.focus();
