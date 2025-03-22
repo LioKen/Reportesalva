@@ -109,9 +109,9 @@ header.header a {
 /* Encabezado del formulario con icono en el lado derecho */
 .form-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centra el título */
     align-items: center;
-    gap: 1rem;
+    position: relative;
     background-color: var(--header-bg);
     color: var(--header-text);
     padding: 1rem;
@@ -120,24 +120,49 @@ header.header a {
     animation: fadeInDown 0.5s ease-out;
 }
 
-@keyframes fadeInDown {
-    from { opacity: 0; transform: translateY(-20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Posicionar los engranajes a la izquierda y derecha */
+.header-icon-left,
+.header-icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    fill: var(--header-text);
+    transition: transform 0.3s ease;
+}
+
+.header-icon-left {
+    left: 1rem;
 }
 
 .header-icon-right {
-    font-size: 2.4rem;
-    /* Puedes usar un SVG embebido o una imagen; aquí se usa un ejemplo de SVG de engranaje */
-    width: 40px;
-    height: 40px;
-    fill: var(--header-text);
-    animation: rotateIcon 2s linear infinite;
+    right: 1rem;
 }
 
-@keyframes rotateIcon {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+/* Efecto: al pasar el cursor sobre el encabezado, los engranajes giran ligeramente */
+.form-header:hover .header-icon-left,
+.form-header:hover .header-icon-right {
+    transform: translateY(-50%) rotate(15deg);
 }
+
+/* Efecto en el título (opcional, por ejemplo, un sutil text-shadow) */
+.form-header:hover h2 {
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: text-shadow 0.3s ease;
+}
+
+/* Asegurarse de que el título esté centrado en el HTML */
+.form-header h2 {
+    margin: 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    text-align: center;
+    width: 100%;
+}
+
+
+
 
 /* Mensaje de error */
 .error-message {
