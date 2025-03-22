@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-
+  
   <style>
-    /* Paleta de colores industrial */
+    /* Paleta pastel y estilos profesionales */
     body {
-      background-color: #282828;
-      color: #fff;
+      background-color: #F8F4F9;
+      color: #333;
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
@@ -23,29 +23,35 @@
       padding: 2rem;
     }
     .formulario {
-      background-color: #333;
+      background-color: #FFFFFF;
       max-width: 600px;
       margin: 0 auto;
       padding: 2rem;
+      border: 2px solid #E0D7E5;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .formulario:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
     .form-header {
       text-align: center;
       margin-bottom: 1.5rem;
     }
-    /* Ícono de engranaje profesional */
-    .gear-icon {
+    /* Icono de conveyor (cinta transportadora) */
+    .conveyor-icon {
       width: 60px;
       height: 60px;
       margin-bottom: 0.5rem;
-      fill: #007ACC;
+      fill: #A3BFFA;
     }
     .form-header h2 {
       margin: 0;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
-      color: #007ACC;
+      color: #5D5C61;
     }
     .campo {
       margin-bottom: 1.2rem;
@@ -55,20 +61,32 @@
       display: block;
       margin-bottom: 0.5rem;
       font-weight: bold;
-      color: #ccc;
+      color: #555;
     }
     .campo input[type="text"],
     .campo input[type="date"],
     .campo input[type="time"],
+    .campo input[type="number"],
     .campo select,
     .campo textarea {
       width: 100%;
       padding: 0.75rem;
-      border: 1px solid #444;
+      border: 1px solid #D8BFD8;
       border-radius: 4px;
       font-size: 1rem;
-      background-color: #444;
-      color: #fff;
+      background-color: #FAF9F9;
+      color: #333;
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+    .campo input[type="text"]:focus,
+    .campo input[type="date"]:focus,
+    .campo input[type="time"]:focus,
+    .campo input[type="number"]:focus,
+    .campo select:focus,
+    .campo textarea:focus {
+      border-color: #A3BFFA;
+      box-shadow: 0 0 5px rgba(163,191,250,0.5);
+      outline: none;
     }
     .campo textarea {
       resize: vertical;
@@ -81,11 +99,11 @@
       list-style: none;
       margin: 0;
       padding: 0;
-      border: 1px solid #444;
+      border: 1px solid #D8BFD8;
       border-top: none;
       max-height: 150px;
       overflow-y: auto;
-      background-color: #444;
+      background-color: #FAF9F9;
       position: absolute;
       width: calc(100% - 2px);
       z-index: 10;
@@ -93,12 +111,13 @@
     .suggestions-list li {
       padding: 0.5rem;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     .suggestions-list li:hover {
-      background-color: #555;
+      background-color: #E6E6FA;
     }
     .boton {
-      background-color: #007ACC;
+      background-color: #A3BFFA;
       color: #fff;
       border: none;
       padding: 0.75rem 1.5rem;
@@ -106,14 +125,15 @@
       font-size: 1rem;
       cursor: pointer;
       width: 100%;
+      transition: background-color 0.3s ease;
     }
     .boton:hover {
-      background-color: #005b99;
+      background-color: #7FA4F9;
     }
     #errorMessage {
       text-align: center;
       margin-bottom: 1rem;
-      color: #ff3333;
+      color: #FF6F61;
     }
     #spinner {
       margin-top: 10px;
@@ -130,7 +150,7 @@
     footer {
       text-align: center;
       padding: 1rem;
-      color: #ccc;
+      color: #888;
       font-size: 0.9rem;
     }
   </style>
@@ -140,9 +160,13 @@
     <section>
       <form id="miFormulario" class="formulario">
         <div class="form-header">
-          <!-- Ícono de engranaje profesional -->
-          <svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-            <path d="M487.4 315.7l-41.4-24 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4-45.5 7.4-24-41.4c-3.3-5.7-10.6-7.8-16.3-5l-41.4 24-24-41.4c-3.3-5.7-10.6-7.8-16.3-5L59.3 60c-5.7 3.3-7.8 10.6-5 16.3l24 41.4L41.4 132c-5.7 3.3-7.8 10.6-5 16.3l24 41.4-7.4 45.5-41.4 24c-5.7 3.3-7.8 10.6-5 16.3l24 41.4 45.5-7.4 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3zM256 336c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/>
+          <!-- Icono de conveyor (cinta transportadora) -->
+          <svg class="conveyor-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+            <!-- Ejemplo de icono de conveyor, puedes personalizar el SVG -->
+            <rect x="4" y="20" width="56" height="24" rx="4" ry="4"/>
+            <path d="M4,32 L60,32" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/>
+            <circle cx="16" cy="48" r="4" fill="#fff"/>
+            <circle cx="48" cy="48" r="4" fill="#fff"/>
           </svg>
           <h2>Reporte de Mantenimiento</h2>
         </div>
@@ -157,11 +181,11 @@
           </div>
         </div>
 
-        <!-- Campo: TIPO DE PEDIDO -->
+        <!-- Campo: TIPO DE ACTIVIDAD (obligatorio) -->
         <div class="campo">
-          <label for="tipo_de_pedidoSelect">TIPO DE PEDIDO</label>
+          <label for="tipo_de_pedidoSelect">TIPO DE ACTIVIDAD</label>
           <select id="tipo_de_pedidoSelect" name="tipo_de_pedido" class="input-text" required>
-            <option value="">Selecciona el tipo de pedido</option>
+            <option value="">Selecciona el tipo de actividad</option>
           </select>
         </div>
 
@@ -201,10 +225,10 @@
           <input type="time" id="hora_inicial" name="hora_inicial" class="input-text" required>
         </div>
 
-        <!-- Campo: DURACIÓN -->
+        <!-- Campo: DURACIÓN (sólo números) -->
         <div class="campo">
           <label for="duracion">DURACIÓN</label>
-          <input type="text" id="duracion" name="duracion" class="input-text" placeholder="Ej. 2 horas" required>
+          <input type="number" id="duracion" name="duracion" class="input-text" placeholder="Ej. 2" required>
         </div>
   
         <!-- Campo: TÉCNICO (autocompletable) -->
@@ -235,6 +259,7 @@
     Si tiene inconvenientes, comuníquese con ********
   </footer>
 
+  <!-- Scripts -->
   <script>
     // Función debounce para optimizar el autocompletado
     function debounce(func, delay) {
@@ -249,7 +274,7 @@
     // Variables para datos (desde opciones.json)
     let datosMaquina = [];
     let datosTecnico = [];
-    // Opciones para el select "TIPO DE PEDIDO"
+    // Opciones para el select "TIPO DE ACTIVIDAD"
     let datosTipoDePedido = ["Emergencia", "Correctivo", "Preventivo"];
 
     // Cargar datos desde opciones.json
@@ -375,7 +400,7 @@
 
       const tipoSelect = document.getElementById('tipo_de_pedidoSelect');
       if (tipoSelect.value === "") {
-        showError('Por favor, selecciona un tipo de pedido.');
+        showError('Por favor, selecciona un tipo de actividad.');
         tipoSelect.focus();
         return;
       }
