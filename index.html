@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reporte de Mantenimiento</title>
-
+  
   <!-- Fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 
   <style>
-    /* Paleta y estilos industriales */
+    /* Paleta de colores industrial */
     body {
-      background-color: #1a1a1a;
+      background-color: #282828;
       color: #fff;
       font-family: 'Roboto', sans-serif;
       margin: 0;
@@ -23,28 +23,29 @@
       padding: 2rem;
     }
     .formulario {
-      background-color: #2b2b2b;
+      background-color: #333;
       max-width: 600px;
       margin: 0 auto;
       padding: 2rem;
       border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     }
     .form-header {
       text-align: center;
       margin-bottom: 1.5rem;
     }
-    .form-header .machine-icon {
+    /* Ícono de engranaje profesional */
+    .gear-icon {
       width: 60px;
-      height: auto;
-      fill: #ff6600;
+      height: 60px;
       margin-bottom: 0.5rem;
+      fill: #007ACC;
     }
     .form-header h2 {
       margin: 0;
       font-family: 'Bebas Neue', sans-serif;
       font-size: 2rem;
-      color: #ff6600;
+      color: #007ACC;
     }
     .campo {
       margin-bottom: 1.2rem;
@@ -66,7 +67,7 @@
       border: 1px solid #444;
       border-radius: 4px;
       font-size: 1rem;
-      background-color: #333;
+      background-color: #444;
       color: #fff;
     }
     .campo textarea {
@@ -84,7 +85,7 @@
       border-top: none;
       max-height: 150px;
       overflow-y: auto;
-      background-color: #333;
+      background-color: #444;
       position: absolute;
       width: calc(100% - 2px);
       z-index: 10;
@@ -94,10 +95,10 @@
       cursor: pointer;
     }
     .suggestions-list li:hover {
-      background-color: #444;
+      background-color: #555;
     }
     .boton {
-      background-color: #ff6600;
+      background-color: #007ACC;
       color: #fff;
       border: none;
       padding: 0.75rem 1.5rem;
@@ -107,7 +108,7 @@
       width: 100%;
     }
     .boton:hover {
-      background-color: #e65c00;
+      background-color: #005b99;
     }
     #errorMessage {
       text-align: center;
@@ -139,12 +140,9 @@
     <section>
       <form id="miFormulario" class="formulario">
         <div class="form-header">
-          <!-- Icono de máquina industrial -->
-          <svg class="machine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-            <rect x="8" y="20" width="48" height="24" rx="4" ry="4"/>
-            <rect x="4" y="24" width="56" height="16" fill="#555"/>
-            <circle cx="20" cy="44" r="4"/>
-            <circle cx="44" cy="44" r="4"/>
+          <!-- Ícono de engranaje profesional -->
+          <svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path d="M487.4 315.7l-41.4-24 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4-45.5 7.4-24-41.4c-3.3-5.7-10.6-7.8-16.3-5l-41.4 24-24-41.4c-3.3-5.7-10.6-7.8-16.3-5L59.3 60c-5.7 3.3-7.8 10.6-5 16.3l24 41.4L41.4 132c-5.7 3.3-7.8 10.6-5 16.3l24 41.4-7.4 45.5-41.4 24c-5.7 3.3-7.8 10.6-5 16.3l24 41.4 45.5-7.4 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3zM256 336c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/>
           </svg>
           <h2>Reporte de Mantenimiento</h2>
         </div>
@@ -225,7 +223,7 @@
         <!-- Spinner y mensaje de confirmación -->
         <div id="spinner" style="display: none; text-align: center;">
           <svg class="spinner" viewBox="0 0 50 50">
-            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#ff6600" stroke-width="5"></circle>
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#007ACC" stroke-width="5"></circle>
           </svg>
         </div>
         <div id="confirmationMessage" style="display: none; text-align: center; margin-top: 10px;"></div>
@@ -237,7 +235,6 @@
     Si tiene inconvenientes, comuníquese con ********
   </footer>
 
-  <!-- Scripts -->
   <script>
     // Función debounce para optimizar el autocompletado
     function debounce(func, delay) {
@@ -260,7 +257,7 @@
       .then(response => response.json())
       .then(data => {
         datosMaquina = data.maquina || [];
-        // En este caso se espera que en el JSON el campo para técnicos se llame "tecnico"
+        // Se espera que en el JSON el arreglo para técnicos se llame "tecnico"
         datosTecnico = data.tecnico || [];
         populateSelect('tipo_de_pedidoSelect', datosTipoDePedido);
       })
@@ -305,7 +302,7 @@
             if (!hiddenInput) {
               hiddenInput = document.createElement('input');
               hiddenInput.type = 'hidden';
-              // Para el autocompletado de máquina
+              // Para el autocompletado de máquina o técnico según el campo
               hiddenInput.name = inputElement.getAttribute('name') + '_codigo';
               hiddenInput.className = 'codigo-maquina-hidden';
               container.appendChild(hiddenInput);
@@ -388,7 +385,7 @@
       spinner.style.display = 'block';
       confirmationMessage.style.display = 'none';
 
-      // URL de Google Apps Script (reemplaza con tu URL)
+      // URL del Google Apps Script (reemplaza con tu URL)
       const scriptURL = 'https://script.google.com/macros/s/AKfycbz1lAhkTNBYTAebc69wzman-zidETvqDqfDZ1AeaUODq3iPx5AvnaJVlBbcaz5VzRk3VA/exec';
       fetch(scriptURL, {
         method: 'POST',
