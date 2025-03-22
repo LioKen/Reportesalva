@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Formulario de Solicitudes</title>
+  <title>Formulario Reporte de Mantenimiento</title>
 
   <!-- Preload y enlaces a hojas de estilo externas -->
   <link rel="preload" href="normalize.css" as="style">
@@ -47,7 +47,7 @@
         <!-- Encabezado -->
         <div class="form-header">
           <span class="header-icon">📝</span>
-          <h2>Formulario de Solicitudes</h2>
+          <h2>Formulario Reporte de Mantenimiento</h2>
         </div>
         <!-- Mensaje de error -->
         <div id="errorMessage" class="error-message" style="display: none;"></div>
@@ -411,7 +411,7 @@
       spinner.style.display = 'block';
       confirmationMessage.style.display = 'none';
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwKnAzxJtVAkx7tED6OcFXWXfFQMFr7hpvW5uCd4jI6npEfkXo4fD2Rb4Gjiir55Xoc/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbz1lAhkTNBYTAebc69wzman-zidETvqDqfDZ1AeaUODq3iPx5AvnaJVlBbcaz5VzRk3VA/exec';
       fetch(scriptURL, {
         method: 'POST',
         mode: 'no-cors',
