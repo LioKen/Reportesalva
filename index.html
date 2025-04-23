@@ -1,300 +1,619 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte de Mantenimiento</title>
-  
-  <!-- Fuentes -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
-  
-  <link rel="preload" href="style1.css" as="style">
-  <link rel="stylesheet" href="style1.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Mantenimiento</title>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  
+  <link rel="preload" href="style1.css" as="style">
+  <link rel="stylesheet" href="style1.css">
 
-  
+    <style>
+        .error-message-span {
+            color: red;
+            display: block; /* Asegura que cada mensaje esté en su propia línea */
+            margin-top: 5px;
+            font-size: 0.9em; /* Ajusta el tamaño si es necesario */
+        }
+         /* Estilo para el div general de error si se usa */
+        #errorMessage.error-message {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+            /* display se maneja en JS */
+        }
+    </style>
 </head>
 <body>
-  <main>
-    <section>
-              <form id="miFormulario" class="formulario">
-                  <div class="form-header">
-                    <div class="header-icon-left">
-                        <!-- Icono de engranaje simple -->
-                        <svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                          <path fill="#4285F4" d="M487.4 315.7l-41.4-24 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4-45.5 7.4-24-41.4c-3.3-5.7-10.6-7.8-16.3-5l-41.4 24-24-41.4c-3.3-5.7-10.6-7.8-16.3-5L59.3 60c-5.7 3.3-7.8 10.6-5 16.3l24 41.4L41.4 132c-5.7 3.3-7.8 10.6-5 16.3l24 41.4-7.4 45.5-41.4 24c-5.7 3.3-7.8 10.6-5 16.3l24 41.4 45.5-7.4 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3zM256 336c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/>
-                        </svg>
-                      </div>
-                      <h2>Reporte de Mantenimiento</h2>
-                      <div class="header-icon-right">
-                        <!-- Icono de engranaje simple -->
-                        <svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                          <path fill="#4285F4" d="M487.4 315.7l-41.4-24 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4-45.5 7.4-24-41.4c-3.3-5.7-10.6-7.8-16.3-5l-41.4 24-24-41.4c-3.3-5.7-10.6-7.8-16.3-5L59.3 60c-5.7 3.3-7.8 10.6-5 16.3l24 41.4L41.4 132c-5.7 3.3-7.8 10.6-5 16.3l24 41.4-7.4 45.5-41.4 24c-5.7 3.3-7.8 10.6-5 16.3l24 41.4 45.5-7.4 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3zM256 336c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/>
-                      </svg>
-          </div>
-        </div>
-        
-        <div id="errorMessage" class="error-message" style="display: none;"></div>
-        
-        <!-- Campo: MAQUINA (autocompletable) -->
-        <div class="campo">
-          <label for="maquinaInput">MAQUINA</label>
-          <div class="autocomplete-container">
-            <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
-            <ul id="maquinaSuggestions" class="suggestions-list"></ul>
-          </div>
-        </div>
+  <main>
+    <section>
+              <form id="miFormulario" class="formulario">
+                  <div class="form-header">
+                    <div class="header-icon-left">
+                                                <svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                          <path fill="#4285F4" d="M487.4 315.7l-41.4-24 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4-45.5 7.4-24-41.4c-3.3-5.7-10.6-7.8-16.3-5l-41.4 24-24-41.4c-3.3-5.7-10.6-7.8-16.3-5L59.3 60c-5.7 3.3-7.8 10.6-5 16.3l24 41.4L41.4 132c-5.7 3.3-7.8 10.6-5 16.3l24 41.4-7.4 45.5-41.4 24c-5.7 3.3-7.8 10.6-5 16.3l24 41.4 45.5-7.4 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3zM256 336c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/>
+                        </svg>
+                      </div>
+                      <h2>Reporte de Mantenimiento</h2>
+                      <div class="header-icon-right">
+                                                <svg class="gear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                          <path fill="#4285F4" d="M487.4 315.7l-41.4-24 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4-45.5 7.4-24-41.4c-3.3-5.7-10.6-7.8-16.3-5l-41.4 24-24-41.4c-3.3-5.7-10.6-7.8-16.3-5L59.3 60c-5.7 3.3-7.8 10.6-5 16.3l24 41.4L41.4 132c-5.7 3.3-7.8 10.6-5 16.3l24 41.4-7.4 45.5-41.4 24c-5.7 3.3-7.8 10.6-5 16.3l24 41.4 45.5-7.4 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24 24 41.4c3.3 5.7 10.6 7.8 16.3 5l41.4-24c5.7-3.3 7.8-10.6 5-16.3l-24-41.4 7.4-45.5 41.4-24c5.7-3.3 7.8-10.6 5-16.3zM256 336c-44.2 0-80-35.8-80-80s35.8-80 80-80 80 35.8 80 80-35.8 80-80 80z"/>
+                      </svg>
+          </div>
+        </div>
+        
+                <div id="errorMessage" class="error-message" style="display: none;"></div>
+        
+                <div class="campo">
+          <label for="maquinaInput">MAQUINA</label>
+          <div class="autocomplete-container">
+            <input type="text" id="maquinaInput" name="maquina" class="input-text" placeholder="Selecciona o escribe la máquina" autocomplete="off" required>
+                        <ul id="maquinaSuggestions" class="suggestions-list"></ul>
+          </div>
+          <span id="errorMaquina" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: TIPO DE ACTIVIDAD (obligatorio) -->
-        <div class="campo">
-          <label for="tipo_de_actividadSelect">TIPO DE ACTIVIDAD</label>
-          <select id="tipo_de_actividadSelect" name="tipo_de_actividad" class="input-text" required>
-            <option value="">Selecciona el tipo de actividad</option>
-          </select>
-        </div>
+                <div class="campo">
+          <label for="tipo_de_actividadSelect">TIPO DE ACTIVIDAD</label>
+          <select id="tipo_de_actividadSelect" name="tipo_de_actividad" class="input-text" required>
+            <option value="">Selecciona el tipo de actividad</option>
+          </select>
+          <span id="errorTipoActividad" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: OT -->
-        <div class="campo">
-          <label for="ot">OT</label>
-          <input type="text" id="ot" name="ot" class="input-text" placeholder="Ingresa la OT" required>
-        </div>
+                <div class="campo">
+          <label for="ot">OT</label>
+          <input type="text" id="ot" name="ot" class="input-text" placeholder="Ingresa la OT" required>
+            <span id="errorOt" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: DESCRIPCIÓN DEL EVENTO -->
-        <div class="campo">
-          <label for="descripcion_evento">DESCRIPCIÓN DEL EVENTO</label>
-          <textarea id="descripcion_evento" name="descripcion_evento" class="input-text" placeholder="Describa el evento" required></textarea>
-        </div>
+                <div class="campo">
+          <label for="descripcion_evento">DESCRIPCIÓN DEL EVENTO</label>
+          <textarea id="descripcion_evento" name="descripcion_evento" class="input-text" placeholder="Describa el evento" required></textarea>
+             <span id="errorDescripcionEvento" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: SOLUCIÓN DEL EVENTO -->
-        <div class="campo">
-          <label for="solucion_evento">SOLUCIÓN DEL EVENTO</label>
-          <textarea id="solucion_evento" name="solucion_evento" class="input-text" placeholder="Describa la solución" required></textarea>
-        </div>
+                <div class="campo">
+          <label for="solucion_evento">SOLUCIÓN DEL EVENTO</label>
+          <textarea id="solucion_evento" name="solucion_evento" class="input-text" placeholder="Describa la solución" required></textarea>
+             <span id="errorSolucionEvento" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: CAUSA RAIZ -->
-        <div class="campo">
-          <label for="causa_raiz">CAUSA RAIZ</label>
-          <textarea id="causa_raiz" name="causa_raiz" class="input-text" placeholder="Indique la causa raíz" required></textarea>
-        </div>
+                <div class="campo">
+          <label for="causa_raiz">CAUSA RAIZ</label>
+          <textarea id="causa_raiz" name="causa_raiz" class="input-text" placeholder="Indique la causa raíz" required></textarea>
+            <span id="errorCausaRaiz" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: FECHA INICIAL -->
-        <div class="campo">
-          <label for="fecha_inicial">FECHA INICIAL</label>
-          <input type="date" id="fecha_inicial" name="fecha_inicial" class="input-text" required>
-        </div>
+                <div class="campo">
+          <label for="fecha_inicial">FECHA INICIAL</label>
+          <input type="date" id="fecha_inicial" name="fecha_inicial" class="input-text" required>
+             <span id="errorFechaInicial" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: HORA INICIAL -->
-        <div class="campo">
-          <label for="hora_inicial">HORA INICIAL</label>
-          <input type="time" id="hora_inicial" name="hora_inicial" class="input-text" required>
-        </div>
+                <div class="campo">
+          <label for="hora_inicial">HORA INICIAL</label>
+          <input type="time" id="hora_inicial" name="hora_inicial" class="input-text" required>
+            <span id="errorHoraInicial" class="error-message-span"></span>
+        </div>
 
-        <!-- Campo: DURACIÓN (sólo números) -->
-        <div class="campo">
-          <label for="duracion">DURACIÓN</label>
-          <input type="number" id="duracion" name="duracion" class="input-text" placeholder="Ej. 2" required>
-        </div>
-  
-        <!-- Campo: TÉCNICO (autocompletable) -->
-        <div class="campo">
-          <label for="tecnicoInput">TÉCNICO</label>
-          <div class="autocomplete-container">
-            <input type="text" id="tecnicoInput" name="tecnico" class="input-text" placeholder="Selecciona o escribe el técnico" autocomplete="off" required>
-            <ul id="tecnicoSuggestions" class="suggestions-list"></ul>
-          </div>
-        </div>
+                <div class="campo">
+          <label for="duracion">DURACIÓN</label>
+          <input type="number" id="duracion" name="duracion" class="input-text" placeholder="Ej. 2" required>
+            <span id="errorDuracion" class="error-message-span"></span>
+        </div>
+  
+                <div class="campo">
+          <label for="tecnicoInput">TÉCNICO</label>
+          <div class="autocomplete-container">
+            <input type="text" id="tecnicoInput" name="tecnico" class="input-text" placeholder="Selecciona o escribe el técnico" autocomplete="off" required>
+                        <ul id="tecnicoSuggestions" class="suggestions-list"></ul>
+          </div>
+          <span id="errorTecnico" class="error-message-span"></span>
+        </div>
 
-        <div style="text-align: center;">
-          <input class="boton" type="submit" value="Enviar">
-        </div>
+        <div style="text-align: center;">
+          <input class="boton" type="submit" value="Enviar">
+        </div>
 
-        <!-- Spinner y mensaje de confirmación -->
-        <div id="spinner" style="display: none; text-align: center;">
-          <svg class="spinner" viewBox="0 0 50 50">
-            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#4285F4" stroke-width="5"></circle>
-          </svg>
-        </div>
-        <div id="confirmationMessage" style="display: none; text-align: center; margin-top: 10px;"></div>
-      </form>
-    </section>
-  </main>
+                <div id="spinner" style="display: none; text-align: center;">
+          <svg class="spinner" viewBox="0 0 50 50">
+            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke="#4285F4" stroke-width="5"></circle>
+          </svg>
+        </div>
+        <div id="confirmationMessage" style="display: none; text-align: center; margin-top: 10px;"></div>
+      </form>
+    </section>
+  </main>
 
-  <footer>
-    Si tiene inconvenientes, comuníquese con ********
-  </footer>
+  <footer>
+    Si tiene inconvenientes, comuníquese con ********
+  </footer>
 
-  <script>
-    // Función debounce para optimizar el autocompletado
-    function debounce(func, delay) {
-      let timeout;
-      return function(...args) {
-        const context = this;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), delay);
-      };
-    }
+  
+  <script>
+    // Función debounce para optimizar el autocompletado
+    function debounce(func, delay) {
+      let timeout;
+      return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), delay);
+      };
+    }
 
-    // Variables para datos (desde opciones.json)
-    let datosMaquina = [];
-    let datosTecnico = [];
-    // Opciones para el select "TIPO DE ACTIVIDAD"
-    let datosTipoDeActividad = ["Emergencia", "Correctivo", "Preventivo"];
+    // Variables para datos (desde opciones.json)
+    let datosMaquina = [];
+    let datosTecnico = [];
+    // Opciones para el select "TIPO DE ACTIVIDAD"
+    let datosTipoDeActividad = ["Emergencia", "Correctivo", "Preventivo"];
 
-    // Cargar datos desde opciones.json
-    fetch('opciones.json')
-      .then(response => response.json())
-      .then(data => {
-        datosMaquina = data.maquina || [];
-        // Se espera que en el JSON el arreglo para técnicos se llame "tecnico"
-        datosTecnico = data.tecnico || [];
-        populateSelect('tipo_de_actividadSelect', datosTipoDeActividad);
-      })
-      .catch(error => console.error('Error al cargar el JSON:', error));
+    // Cargar datos desde opciones.json
+    fetch('opciones.json')
+      .then(response => {
+           if (!response.ok) {
+               throw new Error('Network response was not ok ' + response.statusText);
+           }
+           return response.json();
+       })
+      .then(data => {
+        datosMaquina = data.maquina || []; // Asegura que sea un array
+        datosTecnico = data.tecnico || []; // Asegura que sea un array
+        populateSelect('tipo_de_actividadSelect', datosTipoDeActividad);
+      })
+      .catch(error => {
+           console.error('Error al cargar el JSON:', error);
+           // Opcional: Mostrar un mensaje general si los datos no cargan
+           const generalErrorDiv = document.getElementById('errorMessage');
+           if(generalErrorDiv) {
+               generalErrorDiv.textContent = 'Error: No se pudieron cargar los datos de listas (máquinas/técnicos). Algunas validaciones pueden fallar.';
+               generalErrorDiv.style.display = 'block';
+           }
+       });
 
-    // Poblar select
-    function populateSelect(selectId, optionsArray) {
-      const selectElement = document.getElementById(selectId);
-      optionsArray.forEach(optionValue => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        option.textContent = optionValue;
-        selectElement.appendChild(option);
-      });
-    }
+    // Poblar select - Asegura que la opción por defecto esté al inicio
+    function populateSelect(selectId, optionsArray) {
+      const selectElement = document.getElementById(selectId);
+        if (!selectElement) return; // Salir si el elemento no existe
 
-    // Mostrar sugerencias
-    function mostrarSugerencias(inputElement, suggestionsElement, datos) {
-      const query = inputElement.value.toLowerCase();
-      suggestionsElement.innerHTML = '';
-      let filtrados = [];
-      if (datos.length && typeof datos[0] === 'object') {
-        filtrados = datos.filter(item => item.descripcion.toLowerCase().includes(query));
-      } else {
-        filtrados = datos.filter(item => item.toLowerCase().includes(query));
-      }
-      const fragment = document.createDocumentFragment();
-      filtrados.forEach(item => {
-        const li = document.createElement('li');
-        if (typeof item === 'object') {
-          li.textContent = item.descripcion;
-          li.setAttribute('data-codigo', item.codigo);
+        // Limpiar opciones existentes (excepto la primera si es la de placeholder)
+        const initialOption = selectElement.querySelector('option[value=""]'); // Busca la opción placeholder
+        selectElement.innerHTML = ''; // Limpiar todo
+        if (initialOption) {
+            selectElement.appendChild(initialOption); // Añadir de nuevo el placeholder si existía
         } else {
-          li.textContent = item;
+             // Si no hay placeholder, añadir uno por defecto (aunque el HTML ya tiene uno)
+             const defaultOption = document.createElement('option');
+             defaultOption.value = "";
+             defaultOption.textContent = "Selecciona el tipo de actividad";
+             selectElement.appendChild(defaultOption);
         }
-        li.addEventListener('click', () => {
-          inputElement.value = (typeof item === 'object') ? item.descripcion : item;
-          suggestionsElement.innerHTML = '';
-          const container = inputElement.closest('.autocomplete-container');
-          if (container) {
-            let hiddenInput = container.querySelector('input.codigo-maquina-hidden');
-            if (!hiddenInput) {
-              hiddenInput = document.createElement('input');
-              hiddenInput.type = 'hidden';
-              // Para el autocompletado de máquina o técnico según el campo
-              hiddenInput.name = inputElement.getAttribute('name') + '_codigo';
-              hiddenInput.className = 'codigo-maquina-hidden';
-              container.appendChild(hiddenInput);
+
+      optionsArray.forEach(optionValue => {
+        const option = document.createElement('option');
+        option.value = optionValue;
+        option.textContent = optionValue;
+        selectElement.appendChild(option);
+      });
+    }
+
+    // Mostrar sugerencias
+    // No requiere cambios significativos para la validación
+    function mostrarSugerencias(inputElement, suggestionsElement, datos) {
+      const query = inputElement.value.toLowerCase();
+      suggestionsElement.innerHTML = '';
+      let filtrados = [];
+      if (!datos || datos.length === 0) return; // No hacer nada si no hay datos
+
+      if (datos.length && typeof datos[0] === 'object') {
+        filtrados = datos.filter(item => item.descripcion && item.descripcion.toLowerCase().includes(query));
+      } else {
+        filtrados = datos.filter(item => item && item.toLowerCase().includes(query));
+      }
+
+        if (filtrados.length === 0 && query.length > 0) { // Mostrar mensaje "No results" solo si hay texto escrito
+             const li = document.createElement('li');
+             li.textContent = 'No se encontraron resultados';
+             li.style.cssText = 'font-style: italic; color: #888; padding: 8px 10px;';
+             suggestionsElement.appendChild(li);
+             return;
+        }
+
+
+      const fragment = document.createDocumentFragment();
+      filtrados.forEach(item => {
+        const li = document.createElement('li');
+        let itemValue = (typeof item === 'object') ? item.descripcion : item;
+        let itemCode = (typeof item === 'object') ? item.codigo : itemValue; // Usar el valor como código si no hay código explícito
+
+        li.textContent = itemValue; // Texto visible en la sugerencia
+        li.setAttribute('data-codigo', itemCode); // Guardar el código en el data attribute
+
+        li.addEventListener('click', () => {
+          inputElement.value = itemValue; // Llenar el input visible
+          suggestionsElement.innerHTML = ''; // Ocultar sugerencias
+
+          const container = inputElement.closest('.autocomplete-container');
+          if (container) {
+            // Buscar o crear el input hidden asociado por su nombre derivado
+                 const hiddenInputName = inputElement.getAttribute('name') + '_codigo';
+            let hiddenInput = container.querySelector(`input[type="hidden"][name="${hiddenInputName}"]`);
+
+            if (!hiddenInput) {
+                 console.warn(`Campo oculto con name="${hiddenInputName}" no encontrado. Creando uno dinámicamente.`);
+              hiddenInput = document.createElement('input');
+              hiddenInput.type = 'hidden';
+              hiddenInput.name = hiddenInputName; // Asignar el nombre correcto
+              // hiddenInput.className = 'codigo-maquina-hidden'; // Opcional: mantener la clase si la usas
+              container.appendChild(hiddenInput);
+            }
+            hiddenInput.value = li.getAttribute('data-codigo'); // Usar el código del data attribute
+             console.log(`Campo oculto "${hiddenInputName}" establecido a: "${hiddenInput.value}"`);
+
+             // Limpiar el mensaje de error específico si existe y estaba visible
+             const errorSpanId = `error${inputElement.id.replace('Input', '')}`; // Derivar ID: errorMaquina, errorTecnico
+             const errorSpan = document.getElementById(errorSpanId);
+             if(errorSpan) errorSpan.textContent = ''; // Limpiar mensaje de error específico
+          } else {
+                console.warn('Contenedor .autocomplete-container no encontrado para el input:', inputElement);
             }
-            hiddenInput.value = li.getAttribute('data-codigo') || '';
-          }
-        });
-        fragment.appendChild(li);
-      });
-      suggestionsElement.appendChild(fragment);
-    }
+        });
+        fragment.appendChild(li);
+      });
+      suggestionsElement.appendChild(fragment);
+    }
 
-    // Configurar autocompletado para MAQUINA
-    const maquinaInput = document.getElementById('maquinaInput');
-    const maquinaSuggestions = document.getElementById('maquinaSuggestions');
-    maquinaInput.addEventListener('input', debounce(() => {
-      mostrarSugerencias(maquinaInput, maquinaSuggestions, datosMaquina);
-    }, 300));
+    // --- Lógica para el comportamiento del input de autocompletado ---
+    function setupAutocompleteInputBehavior(inputElement) {
+        if (!inputElement) return; // Salir si el elemento no existe
 
-    // Configurar autocompletado para TÉCNICO
-    const tecnicoInput = document.getElementById('tecnicoInput');
-    const tecnicoSuggestions = document.getElementById('tecnicoSuggestions');
-    tecnicoInput.addEventListener('input', debounce(() => {
-      mostrarSugerencias(tecnicoInput, tecnicoSuggestions, datosTecnico);
-    }, 300));
-
-    // Cerrar sugerencias al hacer clic fuera
-    document.addEventListener('click', e => {
-      document.querySelectorAll('.autocomplete-container').forEach(container => {
-        if (!container.contains(e.target)) {
-          container.querySelectorAll('.suggestions-list').forEach(list => list.innerHTML = '');
+        const suggestionsId = inputElement.id.replace('Input', 'Suggestions');
+        const suggestionsElement = document.getElementById(suggestionsId);
+        if (!suggestionsElement) {
+            console.error(`Elemento de sugerencias con ID "${suggestionsId}" no encontrado.`);
+            return; // Salir si no hay suggestions element
         }
-      });
-    });
+        const dataArray = (inputElement.id === 'maquinaInput') ? datosMaquina : datosTecnico;
 
-    // Funciones para mensajes de error
-    function showError(message) {
-      const errorDiv = document.getElementById('errorMessage');
-      errorDiv.textContent = message;
-      errorDiv.style.display = 'block';
+        // Listener para input (typing) - Usa debounce
+        inputElement.addEventListener('input', debounce(() => {
+             // Si el input visible está vacío, vaciar también el campo oculto asociado
+             if (inputElement.value.trim() === "") {
+                 const container = inputElement.closest('.autocomplete-container');
+                 if (container) {
+                     const hiddenInputName = inputElement.getAttribute('name') + '_codigo';
+                     const hiddenInput = container.querySelector(`input[type="hidden"][name="${hiddenInputName}"]`);
+                      if (hiddenInput) {
+                          hiddenInput.value = "";
+                          console.log(`Campo oculto "${hiddenInputName}" vaciado.`);
+                          // Opcional: limpiar mensaje de error si se corrige al vaciar
+                          const errorSpanId = `error${inputElement.id.replace('Input', '')}`;
+                          const errorSpan = document.getElementById(errorSpanId);
+                          if(errorSpan) errorSpan.textContent = '';
+                      }
+                 }
+             }
+            mostrarSugerencias(inputElement, suggestionsElement, dataArray);
+        }, 300)); // Aplica debounce a la llamada a mostrarSugerencias
+
+         // Listener para blur (perder foco) - Cierra las sugerencias
+         inputElement.addEventListener('blur', () => {
+             // Retrasar el cierre para permitir el clic en las sugerencias antes de que desaparezcan
+             setTimeout(() => {
+                 suggestionsElement.innerHTML = '';
+             }, 150); // Pequeño retraso
+         });
+
+         // Listener para focus (ganar foco) - Opcional: mostrar sugerencias iniciales si el campo no está vacío
+         inputElement.addEventListener('focus', () => {
+              // Puedes descomentar la siguiente línea si quieres que las sugerencias aparezcan al hacer clic si ya hay texto
+              // if (inputElement.value.trim() !== "") {
+              //     mostrarSugerencias(inputElement, suggestionsElement, dataArray);
+              // }
+         });
     }
-    function clearError() {
-      const errorDiv = document.getElementById('errorMessage');
-      errorDiv.textContent = '';
-      errorDiv.style.display = 'none';
-    }
 
-    // Envío del formulario con integración a Google Sheets
-    document.getElementById('miFormulario').addEventListener('submit', function(e) {
-      e.preventDefault();
-      clearError();
-      const form = this;
-      const data = {
-        codigo_maquina: (() => {
-          const container = maquinaInput.closest('.autocomplete-container');
-          const hiddenInput = container.querySelector('input.codigo-maquina-hidden');
-          return hiddenInput ? hiddenInput.value.trim() : "";
-        })(),
-        tipo_de_actividad: document.getElementById('tipo_de_actividadSelect').value,
-        ot: form.querySelector('input[name="ot"]').value,
-        descripcion_evento: form.querySelector('textarea[name="descripcion_evento"]').value,
-        solucion_evento: form.querySelector('textarea[name="solucion_evento"]').value,
-        causa_raiz: form.querySelector('textarea[name="causa_raiz"]').value,
-        fecha_inicial: form.querySelector('input[name="fecha_inicial"]').value,
-        hora_inicial: form.querySelector('input[name="hora_inicial"]').value,
-        duracion: form.querySelector('input[name="duracion"]').value,
-        maquina: maquinaInput.value,
-        tecnico: tecnicoInput.value
-      };
 
-      const tipoSelect = document.getElementById('tipo_de_actividadSelect');
-      if (tipoSelect.value === "") {
-        showError('Por favor, selecciona un tipo de actividad.');
-        tipoSelect.focus();
-        return;
-      }
+    // Configurar autocompletado para MAQUINA al cargar
+    const maquinaInput = document.getElementById('maquinaInput');
+    const maquinaSuggestions = document.getElementById('maquinaSuggestions');
+    setupAutocompleteInputBehavior(maquinaInput);
 
-      const spinner = document.getElementById('spinner');
-      const confirmationMessage = document.getElementById('confirmationMessage');
-      spinner.style.display = 'block';
-      confirmationMessage.style.display = 'none';
 
-      // URL del Google Apps Script (reemplaza con tu URL)
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbz1lAhkTNBYTAebc69wzman-zidETvqDqfDZ1AeaUODq3iPx5AvnaJVlBbcaz5VzRk3VA/exec';
-      fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        spinner.style.display = 'none';
-        confirmationMessage.textContent = 'Su reporte ha sido enviada correctamente.';
-        confirmationMessage.style.display = 'block';
-        form.reset();
-      })
-      .catch(error => {
-        spinner.style.display = 'none';
-        confirmationMessage.textContent = 'Error al enviar datos, por favor intente de nuevo.';
-        confirmationMessage.style.display = 'block';
-        console.error('Error!', error.message);
-      });
-    });
-  </script>
+    // Configurar autocompletado para TÉCNICO al cargar
+    const tecnicoInput = document.getElementById('tecnicoInput');
+    const tecnicoSuggestions = document.getElementById('tecnicoSuggestions');
+    setupAutocompleteInputBehavior(tecnicoInput);
+
+
+    // Cerrar sugerencias al hacer clic fuera - Mantenemos este listener general
+    document.addEventListener('click', e => {
+      document.querySelectorAll('.autocomplete-container').forEach(container => {
+        // Verificar si el clic fue dentro del contenedor de autocompletado
+        const isClickInsideContainer = container.contains(e.target);
+        // Verificar si el clic fue en el propio input (ya manejado por blur)
+        const isClickOnInput = container.querySelector('input[type="text"]') === e.target;
+
+        if (!isClickInsideContainer && !isClickOnInput) {
+          container.querySelectorAll('.suggestions-list').forEach(list => list.innerHTML = '');
+        }
+      });
+    });
+
+    // Funciones showError/clearError para el div general - Se mantienen por si las usas
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+       if (errorDiv) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+       }
+    }
+    function clearError() {
+      const errorDiv = document.getElementById('errorMessage');
+       if (errorDiv) {
+            errorDiv.textContent = '';
+            errorDiv.style.display = 'none';
+       }
+    }
+
+    // Obtener referencias a todos los spans de error específicos
+    const errorTipoActividadSpan = document.getElementById('errorTipoActividad');
+    const errorMaquinaSpan = document.getElementById('errorMaquina');
+    const errorTecnicoSpan = document.getElementById('errorTecnico');
+    const errorOtSpan = document.getElementById('errorOt');
+    const errorDescripcionEventoSpan = document.getElementById('errorDescripcionEvento');
+    const errorSolucionEventoSpan = document.getElementById('errorSolucionEvento');
+    const errorCausaRaizSpan = document.getElementById('errorCausaRaiz');
+    const errorFechaInicialSpan = document.getElementById('errorFechaInicial');
+    const errorHoraInicialSpan = document.getElementById('errorHoraInicial');
+    const errorDuracionSpan = document.getElementById('errorDuracion');
+
+     // También el div general si lo usas
+    const generalErrorDiv = document.getElementById('errorMessage');
+
+
+    // Envío del formulario con integración a Google Sheets
+    document.getElementById('miFormulario').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevenir el envío por defecto
+
+      // --- Limpiar mensajes de error anteriores de todos los spans y el div general ---
+        if (errorTipoActividadSpan) errorTipoActividadSpan.textContent = '';
+        if (errorMaquinaSpan) errorMaquinaSpan.textContent = '';
+        if (errorTecnicoSpan) errorTecnicoSpan.textContent = '';
+        if (errorOtSpan) errorOtSpan.textContent = '';
+        if (errorDescripcionEventoSpan) errorDescripcionEventoSpan.textContent = '';
+        if (errorSolucionEventoSpan) errorSolucionEventoSpan.textContent = '';
+        if (errorCausaRaizSpan) errorCausaRaizSpan.textContent = '';
+        if (errorFechaInicialSpan) errorFechaInicialSpan.textContent = '';
+        if (errorHoraInicialSpan) errorHoraInicialSpan.textContent = '';
+        if (errorDuracionSpan) errorDuracionSpan.textContent = '';
+        if (generalErrorDiv) generalErrorDiv.style.display = 'none'; // Limpiar div general
+
+
+      let formularioValido = true; // Bandera de validación
+      const form = this; // Referencia al formulario
+
+
+      // --- Validar TIPO DE ACTIVIDAD (Select) ---
+      const tipoSelect = document.getElementById('tipo_de_actividadSelect');
+      if (tipoSelect && tipoSelect.value === "") {
+        if (errorTipoActividadSpan) errorTipoActividadSpan.textContent = 'Este campo es obligatorio. Por favor, selecciona un tipo de actividad.';
+        formularioValido = false;
+      }
+
+      // --- Validar MÁQUINA (Autocomplete) ---
+        // Validar solo si el elemento existe
+        if (maquinaInput) {
+            const maquinaValorVisible = maquinaInput.value.trim();
+            const maquinaContainer = maquinaInput.closest('.autocomplete-container');
+            // Buscar el campo oculto por su nombre derivado 'maquina_codigo'
+            const maquinaCodigoInput = maquinaContainer ? maquinaContainer.querySelector('input[name="maquina_codigo"]') : null;
+            const maquinaCodigo = maquinaCodigoInput ? maquinaCodigoInput.value.trim() : "";
+
+            // La validación es: el input visible NO está vacío Y el input oculto del código NO está vacío
+            // Esto asegura que se escribió algo Y que ese algo fue seleccionado de la lista (porque la selección llena el hidden input)
+          if (maquinaValorVisible === "" || maquinaCodigo === "") {
+            if (errorMaquinaSpan) errorMaquinaSpan.textContent = 'Este campo es obligatorio. Por favor, selecciona una máquina válida de la lista sugerida.';
+            formularioValido = false;
+          }
+        } else {
+             console.warn("Elemento maquinaInput no encontrado. Validación omitida.");
+        }
+
+
+      // --- Validar TÉCNICO (Autocomplete) ---
+         // Validar solo si el elemento existe
+         if (tecnicoInput) {
+            const tecnicoValorVisible = tecnicoInput.value.trim();
+            const tecnicoContainer = tecnicoInput.closest('.autocomplete-container');
+            // Buscar el campo oculto por el nombre derivado 'tecnico_codigo'
+            const tecnicoCodigoInput = tecnicoContainer ? tecnicoContainer.querySelector(`input[name="tecnico_codigo"]`) : null;
+            const tecnicoCodigo = tecnicoCodigoInput ? tecnicoCodigoInput.value.trim() : "";
+
+            // La validación es: el input visible NO está vacío Y el input oculto del código NO está vacío
+          if (tecnicoValorVisible === "" || tecnicoCodigo === "") {
+            if (errorTecnicoSpan) errorTecnicoSpan.textContent = 'Este campo es obligatorio. Por favor, selecciona un técnico válido de la lista sugerida.';
+            formularioValido = false;
+          }
+         } else {
+             console.warn("Elemento tecnicoInput no encontrado. Validación omitida.");
+         }
+
+        // --- Validar otros campos obligatorios con 'required' ---
+        // OT
+        const otInput = form.querySelector('input[name="ot"]');
+        if (otInput && otInput.value.trim() === "") {
+            if(errorOtSpan) errorOtSpan.textContent = 'Este campo es obligatorio.';
+            formularioValido = false;
+        }
+
+        // DESCRIPCIÓN DEL EVENTO
+        const descripcionEventoInput = form.querySelector('textarea[name="descripcion_evento"]');
+        if (descripcionEventoInput && descripcionEventoInput.value.trim() === "") {
+            if(errorDescripcionEventoSpan) errorDescripcionEventoSpan.textContent = 'Este campo es obligatorio.';
+            formularioValido = false;
+        }
+
+        // SOLUCIÓN DEL EVENTO
+        const solucionEventoInput = form.querySelector('textarea[name="solucion_evento"]');
+        if (solucionEventoInput && solucionEventoInput.value.trim() === "") {
+            if(errorSolucionEventoSpan) errorSolucionEventoSpan.textContent = 'Este campo es obligatorio.';
+            formularioValido = false;
+        }
+
+        // CAUSA RAIZ
+        const causaRaizInput = form.querySelector('textarea[name="causa_raiz"]');
+        if (causaRaizInput && causaRaizInput.value.trim() === "") {
+            if(errorCausaRaizSpan) errorCausaRaizSpan.textContent = 'Este campo es obligatorio.';
+            formularioValido = false;
+        }
+
+        // FECHA INICIAL
+        const fechaInicialInput = form.querySelector('input[name="fecha_inicial"]');
+        if (fechaInicialInput && fechaInicialInput.value.trim() === "") {
+             if(errorFechaInicialSpan) errorFechaInicialSpan.textContent = 'Este campo es obligatorio.';
+             formularioValido = false;
+        }
+
+        // HORA INICIAL
+        const horaInicialInput = form.querySelector('input[name="hora_inicial"]');
+         if (horaInicialInput && horaInicialInput.value.trim() === "") {
+             if(errorHoraInicialSpan) errorHoraInicialSpan.textContent = 'Este campo es obligatorio.';
+             formularioValido = false;
+         }
+
+        // DURACIÓN
+        const duracionInput = form.querySelector('input[name="duracion"]');
+         // Para inputs type="number", value es cadena vacía si está vacío, o un número como cadena.
+         // Además de vacío, podríamos querer validar que sea un número válido y positivo si aplica.
+         if (duracionInput && (duracionInput.value.trim() === "" || isNaN(duracionInput.value) || parseFloat(duracionInput.value) < 0)) {
+             if(errorDuracionSpan) errorDuracionSpan.textContent = 'Este campo es obligatorio y debe ser un número positivo.';
+             formularioValido = false;
+         }
+
+
+      // --- Detener el envío si no es válido ---
+      if (!formularioValido) {
+            // Opcional: Mostrar un mensaje general en el div de error general
+             if (generalErrorDiv) {
+                 generalErrorDiv.textContent = "Por favor, corrige los errores marcados.";
+                 generalErrorDiv.style.display = 'block';
+             }
+             console.log("Formulario inválido. Envío detenido.");
+
+             // Opcional: Enfocar el primer campo con error
+             const firstInvalidField = form.querySelector('.error-message-span:not(:empty)').previousElementSibling; // Busca el span con texto, luego el elemento anterior (input/select)
+             if(firstInvalidField && firstInvalidField.querySelector('input[type="text"], select, textarea, input[type="date"], input[type="time"], input[type="number"]')) {
+                  // Si el anterior es el contenedor del autocompletado, busca el input dentro
+                 const actualInputToFocus = firstInvalidField.classList.contains('autocomplete-container')
+                                           ? firstInvalidField.querySelector('input[type="text"]')
+                                           : firstInvalidField;
+                 if(actualInputToFocus) actualInputToFocus.focus();
+             } else {
+                // Si no encuentra un campo específico, intentar con el primer campo con error de los spans
+                 const allErrorSpans = form.querySelectorAll('.error-message-span');
+                 for(let i = 0; i < allErrorSpans.length; i++) {
+                     if(allErrorSpans[i].textContent !== '') {
+                         const relatedField = allErrorSpans[i].previousElementSibling;
+                          if(relatedField && relatedField.querySelector('input[type="text"], select, textarea, input[type="date"], input[type="time"], input[type="number"]')) {
+                              const actualInputToFocus = relatedField.classList.contains('autocomplete-container')
+                                                        ? relatedField.querySelector('input[type="text"]')
+                                                        : relatedField;
+                              if(actualInputToFocus) {
+                                  actualInputToFocus.focus();
+                                  break; // Enfocar el primero y salir
+                              }
+                          }
+                     }
+                 }
+             }
+
+        return; // Detiene la ejecución de la función submit
+      }
+
+      // --- Si es válido, proceder con el envío (tu código existente) ---
+         console.log("Formulario válido. Procediendo con el envío.");
+
+         // Re-obtener los valores finales para el objeto de datos (trimming todos los campos de texto)
+         // Se asume que los elementos existen porque la validación pasó
+      const data = {
+        // Usamos los códigos validados
+        codigo_maquina: maquinaInput.closest('.autocomplete-container').querySelector('input[name="maquina_codigo"]').value.trim(),
+        tipo_de_actividad: tipoSelect.value, // Valor validado
+        ot: otInput.value.trim(),
+        descripcion_evento: descripcionEventoInput.value.trim(),
+        solucion_evento: solucionEventoInput.value.trim(),
+        causa_raiz: causaRaizInput.value.trim(),
+        fecha_inicial: fechaInicialInput.value, // Date/Time no necesitan trim
+        hora_inicial: horaInicialInput.value,
+        duracion: duracionInput.value.trim(),
+        // Enviamos también los valores visibles de autocompletado
+        maquina: maquinaInput.value.trim(),
+        tecnico: tecnicoInput.value.trim()
+         // Asegúrate de que tu Google Apps Script maneje estos campos correctamente
+         // Por ejemplo, podrías enviar codigo_tecnico también si lo necesitas en la hoja de cálculo.
+         // tecnico_codigo: tecnicoInput.closest('.autocomplete-container').querySelector('input[name="tecnico_codigo"]').value.trim()
+      };
+
+      // Mostrar spinner y ocultar mensaje anterior
+      const spinner = document.getElementById('spinner');
+      const confirmationMessage = document.getElementById('confirmationMessage');
+      if(spinner) spinner.style.display = 'block';
+      if(confirmationMessage) confirmationMessage.style.display = 'none';
+      if(generalErrorDiv) generalErrorDiv.style.display = 'none'; // Asegurarse que el error general esté oculto
+
+
+      // URL del Google Apps Script (reemplaza con tu URL)
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbz1lAhkTNBYTAebc69wzman-zidETvqDqfDZ1AeaUODq3iPx5AvnaJVlBbcaz5VzRk3VA/exec';
+
+        console.log("Datos a enviar:", data); // Log para depuración
+
+      fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors', // Con no-cors, la respuesta es opaca.
+        // Usando 'text/plain' es más compatible con 'no-cors' para enviar JSON stringificado
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data) // Envía el objeto como string JSON
+      })
+      .then(response => {
+            // Con mode: 'no-cors', esta parte se ejecuta si la petición sale, no si el script Apps Script fue exitoso.
+            // Asumimos que si no hubo error de red, llegó a Google.
+          if(spinner) spinner.style.display = 'none';
+          if(confirmationMessage) {
+                 confirmationMessage.textContent = 'Su reporte ha sido enviada correctamente (posiblemente).'; // Mensaje menos definitivo por no-cors
+                 confirmationMessage.style.display = 'block';
+            }
+          form.reset(); // Resetear el formulario
+            // Limpiar campos ocultos después del reset, ya que form.reset() no los vacía
+             const maquinaCodigoInputReset = maquinaInput.closest('.autocomplete-container').querySelector('input[name="maquina_codigo"]');
+             if(maquinaCodigoInputReset) maquinaCodigoInputReset.value = "";
+             const tecnicoCodigoInputReset = tecnicoInput.closest('.autocomplete-container').querySelector('input[name="tecnico_codigo"]');
+             if(tecnicoCodigoInputReset) tecnicoCodigoInputReset.value = "";
+
+
+      })
+      .catch(error => {
+            console.error('Error en fetch!', error); // Mostrar el objeto error completo
+          if(spinner) spinner.style.display = 'none';
+          if(confirmationMessage) {
+                 confirmationMessage.textContent = 'Error al enviar datos, por favor intente de nuevo.';
+                 confirmationMessage.style.display = 'block';
+            }
+            // Opcional: Mostrar el error en el div general
+             if (generalErrorDiv) {
+                 generalErrorDiv.textContent = 'Error de conexión: ' + error.message;
+                 generalErrorDiv.style.display = 'block';
+             }
+      });
+    });
+
+    // --- Listener para asegurar que el código oculto se borra si el input de texto se borra ---
+    // Esto ya está incluido en la función setupAutocompleteInputBehavior llamada al configurar los inputs
+
+  </script>
 </body>
 </html>
